@@ -1,0 +1,5 @@
+- nama project: TopediaApp
+- waktu mulai: 31 Januari 2025
+- waktu selesai:
+- progress terakhir: video 6, lanjut video 7
+- sumber: youtube inyong tisto
