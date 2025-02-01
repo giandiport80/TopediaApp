@@ -15,7 +15,7 @@ class Prefs(activity: Activity) {
         sp = activity.getSharedPreferences("app", Context.MODE_PRIVATE)
     }
 
-    fun isLogin(value: Boolean) {
+    fun setIsLogin(value: Boolean) {
         sp!!.edit().putBoolean(LOGIN, true).apply()
     }
 
