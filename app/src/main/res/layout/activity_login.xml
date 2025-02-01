@@ -9,35 +9,112 @@
     tools:context=".ui.login.LoginActivity">
 
     <LinearLayout
-        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/_15sdp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:hint="Password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tvStatus"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_20ssp"
-            android:text="Login" />
+            android:text="Lupa Kata Sandi?"
+            android:layout_marginVertical="@dimen/_15sdp"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="end" />
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:id="@+id/btnLogin"
-            android:textSize="@dimen/_12ssp"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login" />
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:textAllCaps="false"
+            android:text="Masuk"
+            android:textSize="@dimen/_13sdp" />
 
-        <TextView
-            android:layout_marginTop="10sp"
-            android:id="@+id/btnLogout"
-            android:textSize="@dimen/_12ssp"
-            android:layout_centerInParent="true"
+        <RelativeLayout
+            android:layout_marginVertical="@dimen/_15sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_toLeftOf="@id/text1"
+                android:layout_centerVertical="true"
+                android:id="@+id/lineLeft"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D3D3D3" />
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Atau masuk dengan"
+                android:layout_centerInParent="true"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="@dimen/_15sdp" />
+
+            <View
+                android:id="@+id/lineRight"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D3D3D3" />
+        </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:textAllCaps="false"
+            android:textColor="#939393"
+            style="@style/Button.OutlineBox"
+            app:icon="@drawable/ic_google"
+            app:iconSize="@dimen/_19sdp"
+            app:iconTint="@null"
+            android:textSize="@dimen/_13sdp"
+            android:text="Masuk" />
+
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout" />
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Belum punya akun?" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daftar"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -17,20 +17,20 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val prefs = Prefs(this)
-        if (prefs.getIsLogin()) {
-            binding.tvStatus.text = "LOGOUT"
-        } else {
-            binding.tvStatus.text = "LOGIN"
-        }
-
-        binding.btnLogin.setOnClickListener {
-            prefs.setIsLogin(true)
-            onBackPressed()
-        }
-
-        binding.btnLogout.setOnClickListener {
-            prefs.setIsLogin(false)
-            onBackPressed()
-        }
+//        if (prefs.getIsLogin()) {
+//            binding.tvStatus.text = "LOGOUT"
+//        } else {
+//            binding.tvStatus.text = "LOGIN"
+//        }
+//
+//        binding.btnLogin.setOnClickListener {
+//            prefs.setIsLogin(true)
+//            onBackPressed()
+//        }
+//
+//        binding.btnLogout.setOnClickListener {
+//            prefs.setIsLogin(false)
+//            onBackPressed()
+//        }
     }
 }

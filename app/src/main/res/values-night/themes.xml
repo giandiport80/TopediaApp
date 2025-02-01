@@ -3,8 +3,6 @@
     <style name="Base.Theme.TopediaApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-
-        <item name="android:textColorPrimary">@android:color/white</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
