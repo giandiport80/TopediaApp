@@ -52,4 +52,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // scallable size
+    implementation(libs.ssp.android)
+    implementation(libs.sdp.android)
 }
