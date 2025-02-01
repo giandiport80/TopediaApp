@@ -17,6 +17,7 @@ class NavigationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNavigationBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,7 +37,7 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_notifications
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         navView.setOnItemSelectedListener {
