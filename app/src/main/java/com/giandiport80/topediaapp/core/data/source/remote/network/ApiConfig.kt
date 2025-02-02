@@ -13,7 +13,7 @@ object ApiConfig {
 
     private val client: Retrofit
         get() {
-            // val gson = GsonBuilder().setLenient().create()
+            val gson = GsonBuilder().setLenient().create()
             // bisa ditambahkan di GsonConverterFactory.create(gson)
             // tujuannya agar lebih toleran untuk response json yang tidak valid
 
@@ -30,7 +30,7 @@ object ApiConfig {
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build()
         }
