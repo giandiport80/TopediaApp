@@ -53,6 +53,18 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // retrofit
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.google.code.gson:gson:2.12.1")
+
+    // koin
+    implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.0.2"))
+    implementation("io.insert-koin:koin-core")
+    implementation("io.insert-koin:koin-android:4.0.2")
+
     // scallable size
     implementation(libs.ssp.android)
     implementation(libs.sdp.android)
