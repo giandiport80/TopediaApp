@@ -5,6 +5,10 @@ import com.giandiport80.topediaapp.core.data.source.local.LocalDataSource
 import com.giandiport80.topediaapp.core.data.source.remote.RemoteDataSource
 import com.giandiport80.topediaapp.core.data.source.remote.network.Resource
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
+import com.giandiport80.topediaapp.core.data.source.remote.response.ErrorResponse
+import com.giandiport80.topediaapp.core.data.source.remote.response.LoginResponse
+import com.google.gson.Gson
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class AppRepository(
@@ -15,13 +19,24 @@ class AppRepository(
         emit(Resource.loading(null))
         try {
             remoteDataSource.login(data).let {
-
                 if (it.isSuccessful) {
                     Log.d("SUCCESS_LOGIN", "login sukses:" + it.body().toString())
                     emit(Resource.success(it.body()?.data))
                 } else {
-                    emit(Resource.error(it.body()?.message ?: "Terjadi kesalahan", null))
-                    Log.d("ERROR_LOGIN", "login error:")
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                    Log.d("ERROR_LOGIN", "login error: $errorMessage")
                 }
             }
         } catch (error: Exception) {
