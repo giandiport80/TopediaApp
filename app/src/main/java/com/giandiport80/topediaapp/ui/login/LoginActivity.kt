@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.databinding.ActivityLoginBinding
+import com.inyongtisto.myhelper.extension.dismisLoading
 import com.inyongtisto.myhelper.extension.isEmpty
+import com.inyongtisto.myhelper.extension.showLoading
 import com.inyongtisto.myhelper.extension.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,17 +55,17 @@ class LoginActivity : AppCompatActivity() {
             var message = ""
             when (it.state) {
                 State.SUCCESS -> {
-                    binding.progressBar.visibility = View.GONE
+                    dismisLoading()
                     message = "Berhasil login, selamat datang ${it?.data?.name}"
                 }
 
                 State.ERROR -> {
-                    binding.progressBar.visibility = View.GONE
+                    dismisLoading()
                     message = it.message ?: "Error"
                 }
 
                 State.LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    showLoading()
                 }
             }
 

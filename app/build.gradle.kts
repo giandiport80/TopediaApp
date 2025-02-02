@@ -71,6 +71,9 @@ dependencies {
     implementation("com.github.TistoW:MyHelper:2.0.18")
 
     // scallable size
-    implementation(libs.ssp.android)
-    implementation(libs.sdp.android)
+    implementation("com.intuit.ssp:ssp-android:1.1.1")
+    implementation("com.intuit.sdp:sdp-android:1.1.1")
+
+    // kot share preferences
+    implementation("com.chibatching.kotpref:kotpref:2.13.1")
 }

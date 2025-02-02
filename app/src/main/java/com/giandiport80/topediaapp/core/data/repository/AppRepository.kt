@@ -7,6 +7,7 @@ import com.giandiport80.topediaapp.core.data.source.remote.network.Resource
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.response.ErrorResponse
 import com.giandiport80.topediaapp.core.data.source.remote.response.LoginResponse
+import com.giandiport80.topediaapp.util.Prefs
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,6 +21,7 @@ class AppRepository(
         try {
             remoteDataSource.login(data).let {
                 if (it.isSuccessful) {
+                    Prefs.isLogin = true
                     Log.d("SUCCESS_LOGIN", "login sukses:" + it.body().toString())
                     emit(Resource.success(it.body()?.data))
                 } else {

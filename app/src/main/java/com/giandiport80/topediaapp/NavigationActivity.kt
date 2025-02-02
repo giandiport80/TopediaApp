@@ -34,17 +34,15 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
                 R.id.navigation_keranjang,
-                R.id.navigation_notifications
+                R.id.navigation_akun
             )
         )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         navView.setOnItemSelectedListener {
-            if (it.itemId == R.id.navigation_notifications) {
-                val prefs = Prefs(this)
-
-                if (prefs.getIsLogin()) {
+            if (it.itemId == R.id.navigation_akun) {
+                if (Prefs.isLogin) {
                     navController.navigate(it.itemId)
                 } else {
                     startActivity(Intent(this, LoginActivity::class.java))

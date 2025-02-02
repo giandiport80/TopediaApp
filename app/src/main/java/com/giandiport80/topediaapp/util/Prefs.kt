@@ -3,23 +3,8 @@ package com.giandiport80.topediaapp.util
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import com.chibatching.kotpref.KotprefModel
 
-class Prefs(activity: Activity) {
-    companion object {
-        private const val LOGIN = "login"
-    }
-
-    private var sp: SharedPreferences? = null
-
-    init {
-        sp = activity.getSharedPreferences("app", Context.MODE_PRIVATE)
-    }
-
-    fun setIsLogin(value: Boolean) {
-        sp!!.edit().putBoolean(LOGIN, true).apply()
-    }
-
-    fun getIsLogin(): Boolean {
-        return sp!!.getBoolean(LOGIN, false)
-    }
+object Prefs : KotprefModel() {
+    public var isLogin by booleanPref(false)
 }
