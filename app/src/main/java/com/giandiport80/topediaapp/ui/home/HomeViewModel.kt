@@ -7,7 +7,11 @@ import androidx.lifecycle.ViewModel
 class HomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "Halo selamat datang"
     }
     val text: LiveData<String> = _text
+
+    fun ubahData(value: String) {
+        _text.postValue(value)
+    }
 }
