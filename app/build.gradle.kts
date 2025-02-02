@@ -61,9 +61,11 @@ dependencies {
     implementation("com.google.code.gson:gson:2.12.1")
 
     // koin
-    implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.0.2"))
+    val koinVersion = "4.0.2"
+    implementation(project.dependencies.platform("io.insert-koin:koin-bom:$koinVersion"))
     implementation("io.insert-koin:koin-core")
-    implementation("io.insert-koin:koin-android:4.0.2")
+    implementation("io.insert-koin:koin-android")
+    implementation("io.insert-koin:koin-androidx-navigation")
 
     // scallable size
     implementation(libs.ssp.android)

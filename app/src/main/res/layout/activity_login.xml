@@ -19,6 +19,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:background="@color/white"
                 android:layout_height="wrap_content"
@@ -87,6 +89,7 @@
         </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:textAllCaps="false"
