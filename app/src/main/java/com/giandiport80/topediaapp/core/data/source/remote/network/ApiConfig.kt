@@ -1,5 +1,6 @@
 package com.giandiport80.topediaapp.core.data.source.remote.network
 
+import com.giandiport80.topediaapp.util.Constant
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "http://localhost:8000/api/"
+    private const val BASE_URL = Constant.BASE_URL + "/api/"
 
     private val client: Retrofit
         get() {

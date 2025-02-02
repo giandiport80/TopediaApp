@@ -1,9 +1,10 @@
 package com.giandiport80.topediaapp.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.databinding.ActivityLoginBinding
-import com.giandiport80.topediaapp.util.Prefs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -23,26 +24,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            viewModel.ubahData("oke")
-        }
-    }
+            val email = binding.editTextEmail.text.toString()
+            val password = binding.editTextPassword.text.toString()
+            val data = LoginRequest(email, password)
+            Log.d("LOGIN_DIKLIK", data.toString())
 
-    private fun testing() {
-        val prefs = Prefs(this)
-//        if (prefs.getIsLogin()) {
-//            binding.tvStatus.text = "LOGOUT"
-//        } else {
-//            binding.tvStatus.text = "LOGIN"
-//        }
-//
-//        binding.btnLogin.setOnClickListener {
-//            prefs.setIsLogin(true)
-//            onBackPressed()
-//        }
-//
-//        binding.btnLogout.setOnClickListener {
-//            prefs.setIsLogin(false)
-//            onBackPressed()
-//        }
+            viewModel.login(data).observe(this) {
+
+            }
+        }
     }
 }

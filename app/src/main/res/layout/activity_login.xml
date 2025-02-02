@@ -50,6 +50,7 @@
             android:layout_gravity="end" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:textAllCaps="false"
@@ -89,7 +90,6 @@
         </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:textAllCaps="false"

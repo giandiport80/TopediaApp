@@ -67,6 +67,9 @@ dependencies {
     implementation("io.insert-koin:koin-android")
     implementation("io.insert-koin:koin-androidx-navigation")
 
+    // custom helper
+    implementation("com.github.TistoW:MyHelper:2.0.18")
+
     // scallable size
     implementation(libs.ssp.android)
     implementation(libs.sdp.android)
