@@ -1,15 +1,18 @@
 package com.giandiport80.topediaapp.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.giandiport80.topediaapp.NavigationActivity
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.databinding.ActivityLoginBinding
 import com.inyongtisto.myhelper.extension.dismisLoading
 import com.inyongtisto.myhelper.extension.isEmpty
+import com.inyongtisto.myhelper.extension.pushActivity
 import com.inyongtisto.myhelper.extension.showLoading
 import com.inyongtisto.myhelper.extension.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -57,6 +60,11 @@ class LoginActivity : AppCompatActivity() {
                 State.SUCCESS -> {
                     dismisLoading()
                     message = "Berhasil login, selamat datang ${it?.data?.name}"
+
+                    val i = Intent(this@LoginActivity, NavigationActivity::class.java)
+                    i.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(i)
                 }
 
                 State.ERROR -> {

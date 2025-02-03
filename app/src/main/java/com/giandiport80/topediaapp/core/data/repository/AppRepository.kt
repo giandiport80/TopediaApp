@@ -23,7 +23,12 @@ class AppRepository(
                 if (it.isSuccessful) {
                     Prefs.isLogin = true
                     Log.d("SUCCESS_LOGIN", "login sukses:" + it.body().toString())
-                    emit(Resource.success(it.body()?.data))
+
+                    val body = it.body()
+                    val user = body?.data
+                    
+                    Prefs.setUser(user)
+                    emit(Resource.success(user))
                 } else {
                     val errorResponse = it.errorBody()?.string()
                     val errorMessage = if (errorResponse != null) {
