@@ -2,6 +2,7 @@ package com.giandiport80.topediaapp.core.data.source.remote.network
 
 import com.giandiport80.topediaapp.core.data.source.model.User
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
+import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
 import com.giandiport80.topediaapp.core.data.source.remote.response.LoginResponse
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -19,6 +20,6 @@ interface ApiService {
 
     @POST("register")
     suspend fun register(
-//        @Body user: Any
-    ): Response<RequestBody>
+        @Body data: RegisterRequest
+    ): Response<LoginResponse>
 }

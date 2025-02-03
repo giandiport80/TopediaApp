@@ -1,9 +1,8 @@
-package com.giandiport80.topediaapp.ui.login
+package com.giandiport80.topediaapp.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.giandiport80.topediaapp.NavigationActivity
@@ -12,29 +11,33 @@ import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.databinding.ActivityLoginBinding
 import com.inyongtisto.myhelper.extension.dismisLoading
 import com.inyongtisto.myhelper.extension.isEmpty
-import com.inyongtisto.myhelper.extension.pushActivity
 import com.inyongtisto.myhelper.extension.showLoading
-import com.inyongtisto.myhelper.extension.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
-    private val viewModel: LoginViewModel by viewModel() // di
+    private val viewModel: AuthViewModel by viewModel() // di
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setData()
+        mainButton()
     }
 
     private fun setData() {
-        viewModel.text.observe(this) {
-            binding.editTextEmail.setText(it)
-        }
 
+    }
+
+    private fun mainButton() {
         binding.btnLogin.setOnClickListener {
             login()
+        }
+
+        binding.btnDaftar.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
