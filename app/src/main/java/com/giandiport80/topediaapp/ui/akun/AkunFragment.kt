@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.giandiport80.topediaapp.NavigationActivity
 import com.giandiport80.topediaapp.databinding.FragmentAkunBinding
+import com.giandiport80.topediaapp.ui.profile.UpdateProfileActivity
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
 
@@ -25,9 +25,6 @@ class AkunFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(AkunViewModel::class.java)
-
         _binding = FragmentAkunBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -44,6 +41,11 @@ class AkunFragment : Fragment() {
             i.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(i)
+        }
+
+        binding.btnUpdate.setOnClickListener {
+            val intent = Intent(context, UpdateProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 

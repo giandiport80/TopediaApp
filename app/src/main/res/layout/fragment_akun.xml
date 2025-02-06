@@ -88,12 +88,14 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/btnUpdate"
+            style="@style/image_clickable"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:tint="@color/colorPrimary"
-            android:src="@drawable/ic_edit_pencil" />
+            android:src="@drawable/ic_edit_pencil"
+            app:tint="@color/colorPrimary" />
     </RelativeLayout>
 
     <TextView
