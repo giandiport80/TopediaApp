@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.giandiport80.topediaapp.NavigationActivity
 import com.giandiport80.topediaapp.databinding.FragmentAkunBinding
-import com.giandiport80.topediaapp.databinding.FragmentNotificationsBinding
+import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
 
 class AkunFragment : Fragment() {
@@ -55,6 +54,7 @@ class AkunFragment : Fragment() {
                 textViewName.text = user.name
                 textViewEmail.text = user.email
                 textViewPhone.text = user.phone
+                textViewInisial.text = Helper.getInitialName(user.name)
             }
         }
     }

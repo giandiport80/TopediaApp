@@ -44,6 +44,7 @@ class NavigationActivity : AppCompatActivity() {
                     navController.navigate(it.itemId)
                 } else {
                     startActivity(Intent(this, LoginActivity::class.java))
+                    return@setOnItemSelectedListener false
                 }
             } else {
                 navController.navigate(it.itemId)
