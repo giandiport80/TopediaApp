@@ -1,18 +1,19 @@
 package com.giandiport80.topediaapp.ui.profile
 
 import android.os.Bundle
-import android.widget.Toolbar
-import androidx.activity.R
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
 import com.giandiport80.topediaapp.databinding.ActivityUpdateProfileBinding
 import com.giandiport80.topediaapp.ui.auth.AuthViewModel
 import com.giandiport80.topediaapp.util.Prefs
+import com.inyongtisto.myhelper.extension.dismisLoading
 import com.inyongtisto.myhelper.extension.isEmpty
-import com.inyongtisto.myhelper.extension.setToolbar
+import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.showLoading
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UpdateProfileActivity : AppCompatActivity() {
+class UpdateProfileActivity : CustomeActivity() {
     private lateinit var binding: ActivityUpdateProfileBinding
     private val viewModel: AuthViewModel by viewModel()
 
@@ -63,40 +64,32 @@ class UpdateProfileActivity : AppCompatActivity() {
             return
         }
 
+        val idUser = Prefs.getUser()?.id
         val data = UpdateProfileRequest(
-            id = 1,
+            id = idUser ?: 0,
             name = binding.editTextNama.text.toString(),
             email = binding.editTextEmail.text.toString(),
             phone = binding.editTextPhone.text.toString()
         )
 
-//        viewModel.register(data).observe(this) {
-//            var message = ""
-//            when (it.state) {
-//                State.SUCCESS -> {
-//                    dismisLoading()
-//                    message = "Berhasil daftar, silahkan login"
-//
-//                    val i = Intent(this@UpdateProfileActivity, LoginActivity::class.java)
-//                    startActivity(i)
-//                }
-//
-//                State.ERROR -> {
-//                    dismisLoading()
-//                    message = it.message ?: "Error"
-//                }
-//
-//                State.LOADING -> {
-//                    showLoading()
-//                }
-//            }
-//
-//            Toast.makeText(
-//                this,
-//                message,
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
+        viewModel.updateUser(data).observe(this) {
+            when (it.state) {
+                State.SUCCESS -> {
+                    Toast.makeText(applicationContext, it?.message, Toast.LENGTH_SHORT).show()
+                    progress.dismiss()
+                    onBackPressedDispatcher.onBackPressed()
+                }
+
+                State.ERROR -> {
+                    Toast.makeText(applicationContext, it?.message, Toast.LENGTH_SHORT).show()
+                    progress.dismiss()
+                }
+
+                State.LOADING -> {
+                    progress.show()
+                }
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
