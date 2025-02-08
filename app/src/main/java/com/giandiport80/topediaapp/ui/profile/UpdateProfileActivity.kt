@@ -13,12 +13,15 @@ import com.giandiport80.topediaapp.util.Prefs
 import com.github.drjacky.imagepicker.ImagePicker
 import com.inyongtisto.myhelper.extension.isEmpty
 import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.toMultipartBody
 import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 
 class UpdateProfileActivity : CustomeActivity() {
     private lateinit var binding: ActivityUpdateProfileBinding
     private val viewModel: AuthViewModel by viewModel()
+    private var fileImage: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,17 +107,55 @@ class UpdateProfileActivity : CustomeActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
+                fileImage = File(uri.path ?: "")
                 Picasso.get().load(uri)
                     .into(binding.imageProfile)
+
+                upload()
             }
         }
 
     private fun pickImage() {
         ImagePicker.with(this)
+            .crop()
             .maxResultSize(620, 620)
             .createIntentFromDialog {
                 launcher.launch(it)
             }
+    }
+
+    private fun upload() {
+        val idUser = Prefs.getUser()?.id
+        val file = fileImage.toMultipartBody()
+
+        if (idUser != null) {
+            if (file != null) {
+                viewModel.uploadImageUser(idUser, file).observe(this) {
+                    when (it.state) {
+                        State.SUCCESS -> {
+                            Toast.makeText(applicationContext, it?.message, Toast.LENGTH_SHORT)
+                                .show()
+                            progress.dismiss()
+                            onBackPressedDispatcher.onBackPressed()
+                        }
+
+                        State.ERROR -> {
+                            Toast.makeText(applicationContext, it?.message, Toast.LENGTH_SHORT)
+                                .show()
+                            progress.dismiss()
+                        }
+
+                        State.LOADING -> {
+                            progress.show()
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Image tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "ID user tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

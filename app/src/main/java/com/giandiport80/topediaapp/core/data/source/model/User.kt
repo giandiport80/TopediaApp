@@ -12,9 +12,9 @@ data class User(
     @SerializedName("email_verified_at")
     val emailVerifiedAt: Any?,
 
-    val image: String?,
-
     val phone: String?,
+
+    val image: String?,
 
     @SerializedName("updated_at")
     val updatedAt: String?,

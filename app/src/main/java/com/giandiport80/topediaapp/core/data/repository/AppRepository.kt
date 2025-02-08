@@ -13,6 +13,7 @@ import com.giandiport80.topediaapp.util.Prefs
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 
 class AppRepository(
     private val local: LocalDataSource,
@@ -125,6 +126,44 @@ class AppRepository(
         } catch (error: Exception) {
             emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
             Log.d("ERROR_UPDATE_USER", "update user error: ${error.message}")
+        }
+    }
+
+    fun uploadImageUser(id: Int, fileImage: MultipartBody.Part? = null) = flow {
+        emit(Resource.loading(null))
+        try {
+            remoteDataSource.uploadImageUser(id, fileImage)?.let {
+                if (it.isSuccessful) {
+                    Log.d(
+                        "SUCCESS_UPLOAD_USER",
+                        "Update profile success sukses:" + it.body().toString()
+                    )
+
+                    val body = it.body()
+                    val user = body?.data
+
+                    Prefs.setUser(user)
+                    emit(Resource.success(user))
+                } else {
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                    Log.d("ERROR_UPLOAD_USER", "update user error: $errorMessage")
+                }
+            }
+        } catch (error: Exception) {
+            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
+            Log.d("ERROR_UPLOAD_USER", "update user error: ${error.message}")
         }
     }
 }

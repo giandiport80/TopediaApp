@@ -4,10 +4,13 @@ import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
 import com.giandiport80.topediaapp.core.data.source.remote.response.LoginResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -27,5 +30,12 @@ interface ApiService {
     suspend fun updateUser(
         @Path("id") id: Int,
         @Body data: UpdateProfileRequest
+    ): Response<LoginResponse>
+
+    @Multipart
+    @POST("upload-user/{id}")
+    suspend fun uploadImageUser(
+        @Path("id") id: Int,
+        @Part data: MultipartBody.Part
     ): Response<LoginResponse>
 }
