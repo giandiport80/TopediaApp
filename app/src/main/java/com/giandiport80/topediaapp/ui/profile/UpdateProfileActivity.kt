@@ -1,16 +1,19 @@
 package com.giandiport80.topediaapp.ui.profile
 
+import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
 import com.giandiport80.topediaapp.databinding.ActivityUpdateProfileBinding
 import com.giandiport80.topediaapp.ui.auth.AuthViewModel
+import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
-import com.inyongtisto.myhelper.extension.dismisLoading
+import com.github.drjacky.imagepicker.ImagePicker
 import com.inyongtisto.myhelper.extension.isEmpty
 import com.inyongtisto.myhelper.base.CustomeActivity
-import com.inyongtisto.myhelper.extension.showLoading
+import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UpdateProfileActivity : CustomeActivity() {
@@ -35,6 +38,10 @@ class UpdateProfileActivity : CustomeActivity() {
         binding.btnSimpan.setOnClickListener {
             register()
         }
+
+        binding.imageProfile.setOnClickListener {
+            pickImage()
+        }
     }
 
     private fun setData() {
@@ -44,6 +51,7 @@ class UpdateProfileActivity : CustomeActivity() {
                 editTextNama.setText(user.name)
                 editTextEmail.setText(user.email)
                 editTextPhone.setText(user.phone)
+                textViewInisial.text = Helper.getInitialName(user.name)
             }
         }
     }
@@ -90,6 +98,23 @@ class UpdateProfileActivity : CustomeActivity() {
                 }
             }
         }
+    }
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri = it.data?.data!!
+                Picasso.get().load(uri)
+                    .into(binding.imageProfile)
+            }
+        }
+
+    private fun pickImage() {
+        ImagePicker.with(this)
+            .maxResultSize(620, 620)
+            .createIntentFromDialog {
+                launcher.launch(it)
+            }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -76,4 +76,10 @@ dependencies {
 
     // kot share preferences
     implementation("com.chibatching.kotpref:kotpref:2.13.1")
+
+    // picasso
+    implementation("com.squareup.picasso:picasso:2.8")
+
+    // image picker
+    implementation("com.github.Drjacky:ImagePicker:2.3.22")
 }
