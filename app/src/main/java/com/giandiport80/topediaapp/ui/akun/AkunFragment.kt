@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import com.giandiport80.topediaapp.NavigationActivity
 import com.giandiport80.topediaapp.databinding.FragmentAkunBinding
 import com.giandiport80.topediaapp.ui.profile.UpdateProfileActivity
+import com.giandiport80.topediaapp.util.Constant
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
+import com.squareup.picasso.Picasso
 
 class AkunFragment : Fragment() {
 
@@ -57,6 +59,8 @@ class AkunFragment : Fragment() {
                 textViewEmail.text = user.email
                 textViewPhone.text = user.phone
                 textViewInisial.text = Helper.getInitialName(user.name)
+                Picasso.get().load(Constant.USER_URL + user.image)
+                    .into(binding.imageProfile)
             }
         }
     }
@@ -64,5 +68,10 @@ class AkunFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setUser()
     }
 }

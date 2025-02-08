@@ -2,12 +2,14 @@ package com.giandiport80.topediaapp.ui.profile
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
 import com.giandiport80.topediaapp.databinding.ActivityUpdateProfileBinding
 import com.giandiport80.topediaapp.ui.auth.AuthViewModel
+import com.giandiport80.topediaapp.util.Constant
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
 import com.github.drjacky.imagepicker.ImagePicker
@@ -39,7 +41,9 @@ class UpdateProfileActivity : CustomeActivity() {
 
     private fun mainButton() {
         binding.btnSimpan.setOnClickListener {
-            register()
+            if (fileImage != null) {
+                upload()
+            }
         }
 
         binding.imageProfile.setOnClickListener {
@@ -55,11 +59,15 @@ class UpdateProfileActivity : CustomeActivity() {
                 editTextEmail.setText(user.email)
                 editTextPhone.setText(user.phone)
                 textViewInisial.text = Helper.getInitialName(user.name)
+                Picasso.get().load(Constant.USER_URL + user.image)
+                    .into(binding.imageProfile)
+
+                Log.d("IMAGE_USER", Constant.USER_URL + user.image)
             }
         }
     }
 
-    private fun register() {
+    private fun update() {
         if (binding.editTextNama.isEmpty()) {
             binding.editTextNama.error = "Nama tidak boleh kosong"
             return
@@ -110,8 +118,6 @@ class UpdateProfileActivity : CustomeActivity() {
                 fileImage = File(uri.path ?: "")
                 Picasso.get().load(uri)
                     .into(binding.imageProfile)
-
-                upload()
             }
         }
 
@@ -133,10 +139,9 @@ class UpdateProfileActivity : CustomeActivity() {
                 viewModel.uploadImageUser(idUser, file).observe(this) {
                     when (it.state) {
                         State.SUCCESS -> {
+                            update()
                             Toast.makeText(applicationContext, it?.message, Toast.LENGTH_SHORT)
                                 .show()
-                            progress.dismiss()
-                            onBackPressedDispatcher.onBackPressed()
                         }
 
                         State.ERROR -> {
