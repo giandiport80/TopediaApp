@@ -31,15 +31,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setData() {
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            binding.textHome.text = it
-        }
     }
 
     private fun mainButton() {
-        binding.btnKlik.setOnClickListener {
-            homeViewModel.ubahData("ini dari view model")
-        }
     }
 
     override fun onDestroyView() {
