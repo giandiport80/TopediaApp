@@ -95,6 +95,41 @@
                 </RelativeLayout>
             </HorizontalScrollView>
 
+            <RelativeLayout
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:text="Produk Terbaru" />
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_13sdp"
+                    android:text="Lihat semua" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                tools:itemCount="6"
+                app:spanCount="2"
+                tools:listitem="@layout/item_home_produk_terbaru" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
