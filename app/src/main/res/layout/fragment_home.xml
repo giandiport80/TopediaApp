@@ -21,6 +21,8 @@
             <include layout="@layout/layout_home_member" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:id="@+id/rvCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

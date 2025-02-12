@@ -5,7 +5,7 @@ data class Product(
     val name: String?,
     val harga: Int?,
     val pengiriman: String?,
-    val terjual: Int?,
+    val sold: Int?,
     val rating: Double?,
     val discount: Int?,
     val grosir: Boolean = false,
