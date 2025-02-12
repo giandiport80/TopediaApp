@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.giandiport80.topediaapp.databinding.FragmentHomeBinding
 import com.giandiport80.topediaapp.ui.home.adapter.CategoryAdapter
+import com.giandiport80.topediaapp.ui.home.adapter.SliderAdapter
 
 class HomeFragment : Fragment() {
 
@@ -16,6 +17,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private val binding get() = _binding!!
     private val adapterCategory = CategoryAdapter()
+    private val adapterSlider = SliderAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,11 +37,16 @@ class HomeFragment : Fragment() {
 
     private fun setupAdapter() {
         binding.rvCategory.adapter = adapterCategory
+        binding.rvSlider.adapter = adapterSlider
     }
 
     private fun setData() {
         homeViewModel.listCategory.observe(viewLifecycleOwner) {
             adapterCategory.addItems(it)
+        }
+
+        homeViewModel.listSlider.observe(viewLifecycleOwner) {
+            adapterSlider.addItems(it)
         }
     }
 

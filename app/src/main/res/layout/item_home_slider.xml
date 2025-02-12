@@ -9,6 +9,7 @@
     android:layout_marginVertical="@dimen/_8sdp">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_120sdp"
         android:scaleType="centerCrop"
