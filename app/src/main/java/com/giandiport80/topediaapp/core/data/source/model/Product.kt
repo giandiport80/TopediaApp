@@ -1,7 +1,7 @@
 package com.giandiport80.topediaapp.core.data.source.model
 
 data class Product(
-    val id: String? = null,
+    val id: Int? = null,
     val name: String?,
     val harga: Int?,
     val pengiriman: String?,
