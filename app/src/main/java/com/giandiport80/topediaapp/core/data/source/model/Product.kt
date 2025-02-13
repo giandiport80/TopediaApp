@@ -3,11 +3,11 @@ package com.giandiport80.topediaapp.core.data.source.model
 data class Product(
     val id: Int? = null,
     val name: String?,
-    val harga: Int?,
+    val harga: Int,
     val pengiriman: String?,
     val sold: Int?,
     val rating: Double?,
     val discount: Int?,
     val grosir: Boolean = false,
-    val image: Int?
+    val image: Int
 )
