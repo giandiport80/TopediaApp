@@ -3,9 +3,11 @@ package com.giandiport80.topediaapp.ui.home.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.databinding.ItemHomeProdukTerbaruBinding
+import com.giandiport80.topediaapp.util.GenericDiffCallback
 import com.giandiport80.topediaapp.util.Helper
 import com.inyongtisto.myhelper.extension.coret
 import com.inyongtisto.myhelper.extension.toGone
@@ -19,6 +21,18 @@ class ProductTerbaruAdapter : RecyclerView.Adapter<ProductTerbaruAdapter.ViewHol
     public fun addItems(items: List<Product>) {
         data.addAll(items)
         notifyDataSetChanged()
+
+        val diffResult = DiffUtil.calculateDiff(
+            GenericDiffCallback(
+                data,
+                items,
+                areItemsTheSame = { old, new -> old.id == new.id },
+                areContentsTheSame = { old, new -> old == new })
+        )
+
+        data.clear()
+        data.addAll(items)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     inner class ViewHolder(private val itemBinding: ItemHomeProdukTerbaruBinding) :
