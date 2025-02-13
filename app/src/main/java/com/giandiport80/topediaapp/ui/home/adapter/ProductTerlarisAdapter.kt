@@ -33,12 +33,14 @@ class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewH
                 tvPengiriman.text = item.pengiriman
                 tvRating.text = "" + item.rating + " | Terjual " + item.sold
 
-                if (item.discount != 0) {
+                if (item.discount != null) {
+                    val hargaSetelahDiskon =
+                        (harga - ((item.discount.toDouble() / 100) * harga)).toRupiah()
                     lyGrosir.toGone()
                     lyDiskon.toVisible()
                     tvDiskon.text = "${item.discount}%"
 
-                    tvHarga.text = "120.000"
+                    tvHarga.text = hargaSetelahDiskon
                     tvHargaAsli.text = Helper.toRupiah(item.harga)
                     tvHargaAsli.coret()
                 }

@@ -9,6 +9,7 @@ import com.giandiport80.topediaapp.databinding.ItemHomeProdukTerbaruBinding
 import com.giandiport80.topediaapp.util.Helper
 import com.inyongtisto.myhelper.extension.coret
 import com.inyongtisto.myhelper.extension.toGone
+import com.inyongtisto.myhelper.extension.toRupiah
 import com.inyongtisto.myhelper.extension.toVisible
 
 class ProductTerbaruAdapter : RecyclerView.Adapter<ProductTerbaruAdapter.ViewHolder>() {
@@ -25,18 +26,21 @@ class ProductTerbaruAdapter : RecyclerView.Adapter<ProductTerbaruAdapter.ViewHol
 
         fun bind(item: Product, position: Int) {
             itemBinding.apply {
+                val harga = item.harga ?: 0
                 imageView.setImageResource(item.image)
                 tvName.text = item.name
                 tvHarga.text = Helper.toRupiah(item.harga)
                 tvPengiriman.text = item.pengiriman
                 tvRating.text = "" + item.rating + " | Terjual " + item.sold
 
-                if (item.discount != 0) {
+                if (item.discount != null && item.discount != 0) {
+                    val hargaSetelahDiskon =
+                        (harga - ((item.discount.toDouble() / 100) * harga)).toRupiah()
                     lyGrosir.toGone()
                     lyDiskon.toVisible()
                     tvDiskon.text = "${item.discount}%"
 
-                    tvHarga.text = "120.000"
+                    tvHarga.text = hargaSetelahDiskon
                     tvHargaAsli.text = Helper.toRupiah(item.harga)
                     tvHargaAsli.coret()
                 }
