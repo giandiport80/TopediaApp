@@ -19,8 +19,8 @@ class ProductTerbaruAdapter : RecyclerView.Adapter<ProductTerbaruAdapter.ViewHol
 
     @SuppressLint("NotifyDataSetChanged")
     public fun addItems(items: List<Product>) {
-        data.addAll(items)
-        notifyDataSetChanged()
+//        data.addAll(items)
+//        notifyDataSetChanged()
 
         val diffResult = DiffUtil.calculateDiff(
             GenericDiffCallback(

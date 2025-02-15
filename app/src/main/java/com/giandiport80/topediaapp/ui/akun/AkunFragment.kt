@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.giandiport80.topediaapp.NavigationActivity
 import com.giandiport80.topediaapp.databinding.FragmentAkunBinding
 import com.giandiport80.topediaapp.ui.profile.UpdateProfileActivity
+import com.giandiport80.topediaapp.ui.toko.BukaTokoActivity
 import com.giandiport80.topediaapp.util.Constant
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
@@ -47,6 +48,11 @@ class AkunFragment : Fragment() {
 
         binding.btnUpdate.setOnClickListener {
             val intent = Intent(context, UpdateProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnToko.setOnClickListener {
+            val intent = Intent(context, BukaTokoActivity::class.java)
             startActivity(intent)
         }
     }
