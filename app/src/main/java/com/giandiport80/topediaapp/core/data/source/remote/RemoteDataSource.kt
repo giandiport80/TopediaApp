@@ -1,6 +1,7 @@
 package com.giandiport80.topediaapp.core.data.source.remote
 
 import com.giandiport80.topediaapp.core.data.source.remote.network.ApiService
+import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
@@ -15,4 +16,6 @@ class RemoteDataSource(private val api: ApiService) {
 
     suspend fun uploadImageUser(id: Int, fileImage: MultipartBody.Part? = null) =
         fileImage?.let { api.uploadImageUser(id, it) }
+
+    suspend fun createToko(data: CreateTokoRequest) = api.createToko(data)
 }

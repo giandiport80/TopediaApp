@@ -4,6 +4,7 @@ import android.util.Log
 import com.giandiport80.topediaapp.core.data.source.local.LocalDataSource
 import com.giandiport80.topediaapp.core.data.source.remote.RemoteDataSource
 import com.giandiport80.topediaapp.core.data.source.remote.network.Resource
+import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
@@ -164,6 +165,40 @@ class AppRepository(
         } catch (error: Exception) {
             emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
             Log.d("ERROR_UPLOAD_USER", "update user error: ${error.message}")
+        }
+    }
+
+    // MODUL TOKO
+    fun createToko(data: CreateTokoRequest) = flow {
+        emit(Resource.loading(null))
+        try {
+            remoteDataSource.createToko(data).let {
+                if (it.isSuccessful) {
+                    Log.d("SUCCESS", "sukses:" + it.body().toString())
+
+                    val body = it.body()?.data
+
+                    emit(Resource.success(body))
+                } else {
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                    Log.d("ERROR", "create toko error: $errorMessage")
+                }
+            }
+        } catch (error: Exception) {
+            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
+            Log.d("ERROR", "create toko error: ${error.message}")
         }
     }
 }

@@ -1,9 +1,12 @@
 package com.giandiport80.topediaapp.core.data.source.remote.network
 
+import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
+import com.giandiport80.topediaapp.core.data.source.remote.response.BaseResponse
 import com.giandiport80.topediaapp.core.data.source.remote.response.LoginResponse
+import com.giandiport80.topediaapp.core.data.source.remote.response.TokoResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -38,4 +41,10 @@ interface ApiService {
         @Path("id") id: Int,
         @Part data: MultipartBody.Part
     ): Response<LoginResponse>
+
+    // TOKO
+    @POST("toko")
+    suspend fun createToko(
+        @Body data: CreateTokoRequest
+    ): Response<BaseResponse<TokoResponse>>
 }
