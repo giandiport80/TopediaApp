@@ -3,6 +3,7 @@ package com.giandiport80.topediaapp.ui.navigation
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -26,6 +27,12 @@ class NavigationActivity : AppCompatActivity() {
 
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
 
         setupNavigation()
         getUser()
@@ -68,4 +75,5 @@ class NavigationActivity : AppCompatActivity() {
             return@setOnItemSelectedListener true
         }
     }
+
 }

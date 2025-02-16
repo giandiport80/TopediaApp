@@ -68,7 +68,7 @@ class AkunFragment : Fragment() {
 
                 if (user.toko != null) {
                     tvStatusToko.visibility = View.GONE
-                    tvNameToko.text = user.toko.nama
+                    tvNameToko.text = user.toko!!.nama
 
                     binding.btnToko.setOnClickListener {
                         val intent = Intent(context, TokoSayaActivity::class.java)

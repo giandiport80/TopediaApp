@@ -24,6 +24,6 @@ data class User(
 
     val token: String?,
 
-    val toko: Toko?
+    var toko: Toko?
 
 )

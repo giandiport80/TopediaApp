@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.giandiport80.topediaapp.R
+import com.giandiport80.topediaapp.core.data.source.model.Toko
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.databinding.ActivityBukaTokoBinding
@@ -30,7 +31,7 @@ class BukaTokoActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.lyToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
+        supportActionBar?.title = "Buka Toko"
 
         mainButton()
     }
@@ -61,6 +62,18 @@ class BukaTokoActivity : AppCompatActivity() {
                     i.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
                     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(i)
+
+                    val user = Prefs.getUser()
+                    if (body != null) {
+                        user?.toko = Toko(
+                            id = body.id,
+                            nama = body.nama,
+                            kota = body.kota,
+                        )
+                    }
+                    Prefs.setUser(user)
+
+                    finish()
                 }
 
                 State.ERROR -> {

@@ -38,9 +38,9 @@ class TokoSayaActivity : AppCompatActivity() {
         if (user != null) {
             binding.apply {
                 if (user.toko != null) {
-                    textViewName.text = user.toko.nama
-                    textViewInisial.text = Helper.getInitialName(user.toko.nama)
-                    Picasso.get().load(Constant.USER_URL + user.toko.image)
+                    textViewName.text = user.toko!!.nama
+                    textViewInisial.text = Helper.getInitialName(user.toko!!.nama)
+                    Picasso.get().load(Constant.USER_URL + user.toko!!.image)
                         .into(binding.imageProfile)
                 }
             }
