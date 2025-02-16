@@ -201,4 +201,37 @@ class AppRepository(
             Log.d("ERROR", "create toko error: ${error.message}")
         }
     }
+
+    fun getUser(id: Int) = flow {
+        emit(Resource.loading(null))
+        try {
+            remoteDataSource.getUser(id)?.let {
+                if (it.isSuccessful) {
+                    val body = it.body()
+                    val user = body?.data
+
+                    Prefs.setUser(user)
+                    emit(Resource.success(user))
+                } else {
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                    Log.d("ERROR_GET_USER", "get user error: $errorMessage")
+                }
+            }
+        } catch (error: Exception) {
+            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
+            Log.d("ERROR_GET_USER", "get user error: ${error.message}")
+        }
+    }
 }

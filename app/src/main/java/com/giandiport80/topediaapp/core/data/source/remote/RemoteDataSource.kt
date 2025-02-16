@@ -18,4 +18,6 @@ class RemoteDataSource(private val api: ApiService) {
         fileImage?.let { api.uploadImageUser(id, it) }
 
     suspend fun createToko(data: CreateTokoRequest) = api.createToko(data)
+
+    suspend fun getUser(id: Int? = null) = id?.let { api.getUser(it) }
 }

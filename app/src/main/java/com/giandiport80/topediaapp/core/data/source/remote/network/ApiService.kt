@@ -10,6 +10,7 @@ import com.giandiport80.topediaapp.core.data.source.remote.response.TokoResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -47,4 +48,9 @@ interface ApiService {
     suspend fun createToko(
         @Body data: CreateTokoRequest
     ): Response<BaseResponse<TokoResponse>>
+
+    @GET("toko-user/{id}")
+    suspend fun getUser(
+        @Path("id") id: Int,
+    ): Response<LoginResponse>
 }

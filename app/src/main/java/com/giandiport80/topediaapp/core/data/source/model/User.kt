@@ -23,4 +23,7 @@ data class User(
     val createdAt: String?,
 
     val token: String?,
+
+    val toko: Toko?
+
 )

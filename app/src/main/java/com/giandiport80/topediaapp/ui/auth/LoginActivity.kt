@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.giandiport80.topediaapp.NavigationActivity
+import com.giandiport80.topediaapp.ui.navigation.NavigationActivity
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.databinding.ActivityLoginBinding

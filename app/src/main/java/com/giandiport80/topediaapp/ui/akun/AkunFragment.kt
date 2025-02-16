@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.giandiport80.topediaapp.NavigationActivity
+import com.giandiport80.topediaapp.ui.navigation.NavigationActivity
 import com.giandiport80.topediaapp.databinding.FragmentAkunBinding
 import com.giandiport80.topediaapp.ui.profile.UpdateProfileActivity
 import com.giandiport80.topediaapp.ui.toko.BukaTokoActivity
+import com.giandiport80.topediaapp.ui.toko.TokoSayaActivity
 import com.giandiport80.topediaapp.util.Constant
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
@@ -51,10 +52,7 @@ class AkunFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.btnToko.setOnClickListener {
-            val intent = Intent(context, BukaTokoActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 
     private fun setUser() {
@@ -67,6 +65,21 @@ class AkunFragment : Fragment() {
                 textViewInisial.text = Helper.getInitialName(user.name)
                 Picasso.get().load(Constant.USER_URL + user.image)
                     .into(binding.imageProfile)
+
+                if (user.toko != null) {
+                    tvStatusToko.visibility = View.GONE
+                    tvNameToko.text = user.toko.nama
+
+                    binding.btnToko.setOnClickListener {
+                        val intent = Intent(context, TokoSayaActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    binding.btnToko.setOnClickListener {
+                        val intent = Intent(context, BukaTokoActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
             }
         }
     }

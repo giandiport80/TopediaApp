@@ -1,20 +1,25 @@
-package com.giandiport80.topediaapp
+package com.giandiport80.topediaapp.ui.navigation
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.giandiport80.topediaapp.R
+import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityNavigationBinding
 import com.giandiport80.topediaapp.ui.auth.LoginActivity
 import com.giandiport80.topediaapp.util.Prefs
+import com.inyongtisto.myhelper.extension.dismisLoading
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NavigationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNavigationBinding
-
+    private val viewModel: NavViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +27,16 @@ class NavigationActivity : AppCompatActivity() {
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupNavigation()
+        getUser()
+    }
+
+    private fun getUser() {
+        val id = Prefs.getUser()?.id
+        viewModel.getUser(id!!)?.observe(this) { }
+    }
+
+    private fun setupNavigation() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_navigation)

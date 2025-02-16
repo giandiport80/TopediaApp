@@ -7,7 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.giandiport80.topediaapp.R
 import com.giandiport80.topediaapp.databinding.ActivityTokoSayaBinding
+import com.giandiport80.topediaapp.util.Constant
+import com.giandiport80.topediaapp.util.Helper
+import com.giandiport80.topediaapp.util.Prefs
 import com.inyongtisto.myhelper.extension.setToolbar
+import com.squareup.picasso.Picasso
 
 class TokoSayaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTokoSayaBinding
@@ -21,11 +25,26 @@ class TokoSayaActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Toko Saya"
 
+        setData()
         mainButton()
     }
 
     private fun mainButton() {
 
+    }
+
+    private fun setData() {
+        val user = Prefs.getUser()
+        if (user != null) {
+            binding.apply {
+                if (user.toko != null) {
+                    textViewName.text = user.toko.nama
+                    textViewInisial.text = Helper.getInitialName(user.toko.nama)
+                    Picasso.get().load(Constant.USER_URL + user.toko.image)
+                        .into(binding.imageProfile)
+                }
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
