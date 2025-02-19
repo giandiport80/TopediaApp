@@ -40,7 +40,7 @@ class NavigationActivity : AppCompatActivity() {
 
     private fun getUser() {
         val id = Prefs.getUser()?.id
-        viewModel.getUser(id!!)?.observe(this) { }
+        viewModel.getUser(id)?.observe(this) { }
     }
 
     private fun setupNavigation() {
