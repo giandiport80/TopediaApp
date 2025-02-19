@@ -234,4 +234,34 @@ class AppRepository(
             Log.d("ERROR_GET_USER", "get user error: ${error.message}")
         }
     }
+
+    fun getAlamatToko() = flow {
+        emit(Resource.loading(null))
+        try {
+            remoteDataSource.getAlamatToko().let {
+                if (it.isSuccessful) {
+                    val body = it.body()
+                    val data = body?.data
+
+                    emit(Resource.success(data))
+                } else {
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                }
+            }
+        } catch (error: Exception) {
+            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
+        }
+    }
 }

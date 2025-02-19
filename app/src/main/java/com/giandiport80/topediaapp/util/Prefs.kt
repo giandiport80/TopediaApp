@@ -25,3 +25,5 @@ object Prefs : KotprefModel() {
         }
     }
 }
+
+fun getTokoId(): Int? = Prefs.getUser()?.toko?.id

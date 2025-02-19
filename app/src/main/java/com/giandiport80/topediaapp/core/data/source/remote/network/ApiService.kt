@@ -1,9 +1,11 @@
 package com.giandiport80.topediaapp.core.data.source.remote.network
 
+import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
+import com.giandiport80.topediaapp.core.data.source.remote.response.BaseListResponse
 import com.giandiport80.topediaapp.core.data.source.remote.response.BaseResponse
 import com.giandiport80.topediaapp.core.data.source.remote.response.LoginResponse
 import com.giandiport80.topediaapp.core.data.source.remote.response.TokoResponse
@@ -53,4 +55,9 @@ interface ApiService {
     suspend fun getUser(
         @Path("id") id: Int,
     ): Response<LoginResponse>
+
+    @GET("alamat/toko/{id}")
+    suspend fun getAlamatToko(
+        @Path("id") tokoId: Int? = null,
+    ): Response<BaseListResponse<AlamatToko>>
 }

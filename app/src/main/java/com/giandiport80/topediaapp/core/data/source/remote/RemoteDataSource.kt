@@ -5,6 +5,7 @@ import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoReq
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
+import com.giandiport80.topediaapp.util.getTokoId
 import okhttp3.MultipartBody
 
 class RemoteDataSource(private val api: ApiService) {
@@ -20,4 +21,6 @@ class RemoteDataSource(private val api: ApiService) {
     suspend fun createToko(data: CreateTokoRequest) = api.createToko(data)
 
     suspend fun getUser(id: Int? = null) = id?.let { api.getUser(it) }
+
+    suspend fun getAlamatToko() = api.getAlamatToko(getTokoId())
 }
