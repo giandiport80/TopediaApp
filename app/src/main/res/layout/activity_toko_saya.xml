@@ -126,4 +126,48 @@
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/gray5"
+        android:layout_marginTop="@dimen/_15sdp" />
+
+    <LinearLayout
+        android:id="@+id/btnAlamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_15sdp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvKota"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/TypographyStyles.Text2.Bold"
+            android:layout_width="wrap_content"
+            android:textColor="@color/gray2"
+            android:layout_height="wrap_content"
+            android:text="Jakarta" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_placeholder"
+                app:tint="@color/gray3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alamat"
+                android:textAppearance="@style/TypographyStyles.Text2"
+                android:layout_marginStart="@dimen/_8sdp" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

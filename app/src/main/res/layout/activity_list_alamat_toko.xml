@@ -22,7 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/btnPilih"
-            android:layout_marginBottom="@dimen/_5sdp" />
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_alamat_toko" />
+
+        <TextView
+            android:id="@+id/tvError"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tidak ada data" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPilih"

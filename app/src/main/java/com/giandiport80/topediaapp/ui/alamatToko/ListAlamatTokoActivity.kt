@@ -1,18 +1,17 @@
 package com.giandiport80.topediaapp.ui.alamatToko
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.giandiport80.topediaapp.R
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityListAlamatTokoBinding
+import com.giandiport80.topediaapp.ui.alamatToko.adapter.AlamatTokoAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListAlamatTokoActivity : AppCompatActivity() {
+class ListAlamatTokoActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityListAlamatTokoBinding
     private val viewModel: AlamatTokoViewModel by viewModel()
+    private var adapter = AlamatTokoAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +25,29 @@ class ListAlamatTokoActivity : AppCompatActivity() {
 
         mainButton()
         getData()
+        setupAdapter()
+    }
+
+    private fun setupAdapter() {
+        binding.rvData.adapter = adapter
     }
 
     private fun getData() {
         viewModel.getAlamatToko().observe(this) {
             when (it.state) {
                 State.SUCCESS -> {
+                    binding.tvError.visibility = View.GONE
 
+                    val data = it.data ?: emptyList()
+                    adapter.addItems(data)
+
+                    if (data.isEmpty()) {
+                        binding.tvError.visibility = View.VISIBLE
+                    }
                 }
 
                 State.ERROR -> {
-
+                    binding.tvError.visibility = View.VISIBLE
                 }
 
                 State.LOADING -> {
@@ -48,5 +59,10 @@ class ListAlamatTokoActivity : AppCompatActivity() {
 
     private fun mainButton() {
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }

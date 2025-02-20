@@ -4,22 +4,82 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:layout_marginHorizontal="@dimen/_5sdp"
+    android:layout_marginHorizontal="@dimen/_3sdp"
     android:layout_marginVertical="@dimen/_8sdp">
 
     <LinearLayout
-        android:padding="@dimen/_8sdp"
+        android:padding="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvKota"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:textAppearance="@style/TypographyStyles.Text3.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jakarta" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_more_vert_24" />
+
+        </RelativeLayout>
+
         <TextView
-            android:id="@+id/tvNama"
-            android:gravity="center"
-            android:textAppearance="@style/TypographyStyles.Text3.Bold"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/tvAlamat"
+            android:textColor="@color/gray2"
+            android:textAppearance="@style/TypographyStyles.Text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rumah" />
+            android:text="Jalan kampung kelapa no 12 provinsi Banten" />
+
+        <View
+            android:background="@color/gray2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/_10sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPhone"
+            android:drawableStart="@drawable/ic_asset_smartphone"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TypographyStyles.Text3"
+            android:textColor="@color/gray2"
+            android:drawableTint="@color/gray2"
+            android:drawablePadding="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0812345678" />
+
+        <View
+            android:background="@color/gray2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/_10sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmail"
+            android:drawableStart="@drawable/ic_asset_email"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TypographyStyles.Text3"
+            android:textColor="@color/gray2"
+            android:drawableTint="@color/gray2"
+            android:drawablePadding="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="admin@gmail.com" />
+
 
     </LinearLayout>
 

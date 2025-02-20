@@ -1,16 +1,13 @@
 package com.giandiport80.topediaapp.ui.toko
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.giandiport80.topediaapp.R
 import com.giandiport80.topediaapp.databinding.ActivityTokoSayaBinding
+import com.giandiport80.topediaapp.ui.alamatToko.ListAlamatTokoActivity
 import com.giandiport80.topediaapp.util.Constant
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
-import com.inyongtisto.myhelper.extension.setToolbar
 import com.squareup.picasso.Picasso
 
 class TokoSayaActivity : AppCompatActivity() {
@@ -26,11 +23,16 @@ class TokoSayaActivity : AppCompatActivity() {
         supportActionBar?.title = "Toko Saya"
 
         setData()
-        mainButton()
+        setupListener()
     }
 
-    private fun mainButton() {
-
+    private fun setupListener() {
+        binding.apply {
+            btnAlamat.setOnClickListener {
+                val intent = Intent(this@TokoSayaActivity, ListAlamatTokoActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun setData() {
