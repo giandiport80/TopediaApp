@@ -60,4 +60,10 @@ interface ApiService {
     suspend fun getAlamatToko(
         @Path("id") tokoId: Int? = null,
     ): Response<BaseListResponse<AlamatToko>>
+
+    @POST("alamat")
+    suspend fun createAlamatToko(
+        @Body data: AlamatToko,
+    ): Response<BaseListResponse<AlamatToko>>
+
 }
