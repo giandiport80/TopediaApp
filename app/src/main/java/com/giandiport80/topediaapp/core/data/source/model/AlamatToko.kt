@@ -9,23 +9,26 @@ data class AlamatToko(
     @SerializedName("toko_id")
     val tokoId: Int? = null,
 
+    @SerializedName("label")
+    val label: String? = null,
+
     @SerializedName("alamat")
     val alamat: String? = null,
 
     @SerializedName("provinsi_id")
-    val provinsiId: String? = null,
+    val provinsiId: Int? = null,
 
     @SerializedName("provinsi")
     val provinsi: String? = null,
 
     @SerializedName("kota_id")
-    val kotaId: String? = null,
+    val kotaId: Int? = null,
 
     @SerializedName("kota")
     val kota: String? = null,
 
     @SerializedName("kecamatan_id")
-    val kecamatanId: String? = null,
+    val kecamatanId: Int? = null,
 
     @SerializedName("kecamatan")
     val kecamatan: String? = null,

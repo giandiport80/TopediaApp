@@ -37,7 +37,6 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@color/white"
                         android:hint="Label Lokasi"
-                        android:inputType="textEmailAddress"
                         android:paddingStart="0dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -48,7 +47,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_lokasi"
+                        android:id="@+id/edtAlamat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
