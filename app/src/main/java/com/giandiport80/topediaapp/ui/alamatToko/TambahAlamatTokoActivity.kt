@@ -12,8 +12,10 @@ import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityTambahAlamatTokoBinding
 import com.giandiport80.topediaapp.util.defaultError
+import com.giandiport80.topediaapp.util.getTokoId
 import com.inyongtisto.myhelper.base.CustomeActivity
 import com.inyongtisto.myhelper.extension.isEmpty
+import com.inyongtisto.myhelper.extension.setOnPositionSelectedListener
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import com.inyongtisto.myhelper.extension.showLoading
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,7 +36,47 @@ class TambahAlamatTokoActivity : CustomeActivity() {
         binding = ActivityTambahAlamatTokoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.lyToolbar.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Tambah Alamat"
+
+        setupUI()
         mainButton()
+    }
+
+    private fun setupUI() {
+        val listProvinsi: List<String> =
+            listOf("Pilih Provinsi", "Jawa Timur", "Jawa Tengah", "Jawa Barat")
+        val listKota: List<String> = listOf("Pilih Kota", "Lamongan", "Semarang", "Bogor")
+        val listKecamatan: List<String> =
+            listOf("Pilih Kecamatan", "Solokuro", "Ngalian", "Ngaglik")
+
+        binding.spnProvinsi.setOnPositionSelectedListener(this, listProvinsi) {
+            if (it == 0) {
+                provinsiId = null
+            } else {
+                provinsiId = 10 // jawa tengah
+                provinsi = listProvinsi[it]
+            }
+        }
+
+        binding.spnKota.setOnPositionSelectedListener(this, listKota) {
+            if (it == 0) {
+                kotaId = null
+            } else {
+                kotaId = 399
+                kota = listKota[it]
+            }
+        }
+
+        binding.spnKecamatan.setOnPositionSelectedListener(this, listKecamatan) {
+            if (it == 0) {
+                kecamatanId = null
+            } else {
+                kecamatanId = 5505
+                kecamatan = listProvinsi[it]
+            }
+        }
     }
 
     private fun mainButton() {
@@ -44,6 +86,15 @@ class TambahAlamatTokoActivity : CustomeActivity() {
                 if (validate()) {
                     simpanAlamat()
                 }
+            }
+
+            lyToolbar.btnSimpan.setOnLongClickListener {
+                edtLabelLokasi.setText("Rumah")
+                edtAlamat.setText("Jalan Kenangan no 12")
+                edtKodePos.setText("15520")
+                edtPhone.setText("089668958495")
+                edtEmail.setText("gian123@gmail.com")
+                return@setOnLongClickListener true
             }
         }
     }
@@ -88,6 +139,7 @@ class TambahAlamatTokoActivity : CustomeActivity() {
 
     private fun simpanAlamat() {
         val requestData = AlamatToko(
+            tokoId = getTokoId(),
             label = binding.edtLabelLokasi.text.toString(),
             alamat = binding.edtAlamat.text.toString(),
             provinsi = provinsi,
@@ -105,7 +157,7 @@ class TambahAlamatTokoActivity : CustomeActivity() {
                 State.SUCCESS -> {
                     progress.dismiss()
                     Toast.makeText(this, "Alamat berhasil ditambahkan", Toast.LENGTH_SHORT).show()
-                    onBackPressedDispatcher.onBackPressed()
+                    finish()
                 }
 
                 State.ERROR -> {

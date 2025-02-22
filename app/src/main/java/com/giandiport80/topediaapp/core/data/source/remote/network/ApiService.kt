@@ -64,6 +64,6 @@ interface ApiService {
     @POST("alamat")
     suspend fun createAlamatToko(
         @Body data: AlamatToko,
-    ): Response<BaseListResponse<AlamatToko>>
+    ): Response<BaseResponse<AlamatToko>>
 
 }

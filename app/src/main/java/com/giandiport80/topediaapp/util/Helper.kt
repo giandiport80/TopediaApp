@@ -1,5 +1,9 @@
 package com.giandiport80.topediaapp.util
 
+import android.content.Context
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -19,5 +23,30 @@ object Helper {
         var value = format.format(number).replace(",00", "")
         if (hideCurrency) value = value.replace("Rp", "")
         return value
+    }
+
+    fun <T> setupSpinner(
+        context: Context,
+        spinner: Spinner,
+        items: List<T>,
+        onItemSelected: ((T) -> Unit)? = null
+    ) {
+        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, items)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
+                onItemSelected?.invoke(items[position])
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Bisa dikosongkan jika tidak ada aksi
+            }
+        }
     }
 }

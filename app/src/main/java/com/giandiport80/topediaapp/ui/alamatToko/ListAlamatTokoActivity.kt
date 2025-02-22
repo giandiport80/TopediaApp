@@ -30,6 +30,11 @@ class ListAlamatTokoActivity() : AppCompatActivity() {
         setupUI()
     }
 
+    override fun onResume() {
+        getData()
+        super.onResume()
+    }
+
     private fun setupUI() {
         binding.apply {
             lyToolbar.btnTambah.visibility = View.VISIBLE
