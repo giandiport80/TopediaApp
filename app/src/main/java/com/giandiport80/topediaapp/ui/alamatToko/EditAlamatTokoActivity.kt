@@ -14,7 +14,7 @@ import com.inyongtisto.myhelper.extension.setOnPositionSelectedListener
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class TambahAlamatTokoActivity : CustomeActivity() {
+class EditAlamatTokoActivity : CustomeActivity() {
     private lateinit var binding: ActivityTambahAlamatTokoBinding
     private val viewModel: AlamatTokoViewModel by viewModel()
     private var provinsiId: Int? = null
@@ -32,7 +32,7 @@ class TambahAlamatTokoActivity : CustomeActivity() {
 
         setSupportActionBar(binding.lyToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Tambah Alamat"
+        supportActionBar?.title = "Ubah Alamat"
 
         setupUI()
         mainButton()
@@ -102,7 +102,7 @@ class TambahAlamatTokoActivity : CustomeActivity() {
 
             if (provinsiId == null) {
                 Toast.makeText(
-                    this@TambahAlamatTokoActivity,
+                    this@EditAlamatTokoActivity,
                     "Harap pilih provinsi",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -111,7 +111,7 @@ class TambahAlamatTokoActivity : CustomeActivity() {
 
             if (kotaId == null) {
                 Toast.makeText(
-                    this@TambahAlamatTokoActivity,
+                    this@EditAlamatTokoActivity,
                     "Harap pilih kota",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -120,7 +120,7 @@ class TambahAlamatTokoActivity : CustomeActivity() {
 
             if (kecamatanId == null) {
                 Toast.makeText(
-                    this@TambahAlamatTokoActivity,
+                    this@EditAlamatTokoActivity,
                     "Harap pilih kecamatan",
                     Toast.LENGTH_SHORT
                 ).show()
