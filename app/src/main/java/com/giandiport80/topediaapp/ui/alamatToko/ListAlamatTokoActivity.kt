@@ -3,16 +3,25 @@ package com.giandiport80.topediaapp.ui.alamatToko
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityListAlamatTokoBinding
 import com.giandiport80.topediaapp.ui.alamatToko.adapter.AlamatTokoAdapter
+import com.giandiport80.topediaapp.util.defaultError
+import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.logs
+import com.inyongtisto.myhelper.extension.showConfirmDialog
+import com.inyongtisto.myhelper.extension.showErrorDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListAlamatTokoActivity() : AppCompatActivity() {
+class ListAlamatTokoActivity() : CustomeActivity() {
     private lateinit var binding: ActivityListAlamatTokoBinding
     private val viewModel: AlamatTokoViewModel by viewModel()
-    private var adapter = AlamatTokoAdapter()
+    private var adapter = AlamatTokoAdapter { item, position ->
+        confirmDeleteAlamat(item, position)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +37,37 @@ class ListAlamatTokoActivity() : AppCompatActivity() {
         getData()
         setupAdapter()
         setupUI()
+    }
+
+    private fun onDelete(item: AlamatToko, position: Int) {
+        viewModel.deleteAlamatToko(item.id).observe(this) {
+            when (it.state) {
+                State.SUCCESS -> {
+                    progress.dismiss()
+                    adapter.removeAt(position)
+                    Toast.makeText(this, "Alamat berhasil dihapus", Toast.LENGTH_SHORT).show()
+                }
+
+                State.ERROR -> {
+                    progress.dismiss()
+                    showErrorDialog(it.message.defaultError())
+                }
+
+                State.LOADING -> {
+                    progress.show()
+                }
+            }
+        }
+    }
+
+    private fun confirmDeleteAlamat(item: AlamatToko, position: Int) {
+        showConfirmDialog(
+            "Delete Alamat",
+            "Apakah kamu yakin ingin menghapus alamat ini?",
+            "Delete"
+        ) {
+            onDelete(item, position)
+        }
     }
 
     override fun onResume() {

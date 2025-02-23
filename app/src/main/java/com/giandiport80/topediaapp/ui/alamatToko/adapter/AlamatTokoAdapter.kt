@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
+import com.giandiport80.topediaapp.core.data.source.model.User
 import com.giandiport80.topediaapp.databinding.ItemAlamatTokoBinding
 import com.giandiport80.topediaapp.ui.alamatToko.EditAlamatTokoActivity
 import com.inyongtisto.myhelper.extension.intentActivity
@@ -14,7 +15,8 @@ import com.inyongtisto.myhelper.extension.logs
 import com.inyongtisto.myhelper.extension.popUpMenu
 import com.inyongtisto.myhelper.extension.toJson
 
-class AlamatTokoAdapter : RecyclerView.Adapter<AlamatTokoAdapter.ViewHolder>() {
+class AlamatTokoAdapter(var onDelete: (item: AlamatToko, position: Int) -> Unit) :
+    RecyclerView.Adapter<AlamatTokoAdapter.ViewHolder>() {
     private val data = ArrayList<AlamatToko>()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -49,12 +51,17 @@ class AlamatTokoAdapter : RecyclerView.Adapter<AlamatTokoAdapter.ViewHolder>() {
                                 )
                             }
 
-                            "Hapus" -> logs("Hapus")
+                            "Hapus" -> onDelete.invoke(item, adapterPosition)
                         }
                     }
                 }
             }
         }
+    }
+
+    fun removeAt(index: Int) {
+        data.removeAt(index)
+        notifyItemRemoved(index)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

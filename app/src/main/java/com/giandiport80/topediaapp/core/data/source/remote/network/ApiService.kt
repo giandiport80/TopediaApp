@@ -12,6 +12,7 @@ import com.giandiport80.topediaapp.core.data.source.remote.response.TokoResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -72,4 +73,8 @@ interface ApiService {
         @Body data: AlamatToko,
     ): Response<BaseResponse<AlamatToko>>
 
+    @DELETE("alamat/{id}")
+    suspend fun deleteAlamatToko(
+        @Path("id") tokoId: Int? = null,
+    ): Response<BaseResponse<AlamatToko>>
 }
