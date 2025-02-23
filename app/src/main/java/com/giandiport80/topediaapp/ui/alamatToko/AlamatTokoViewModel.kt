@@ -11,4 +11,6 @@ class AlamatTokoViewModel(private val repo: AppRepository) : ViewModel() {
 
     fun createAlamatToko(data: AlamatToko) = repo.createAlamatToko(data).asLiveData()
 
+    fun updateAlamatToko(data: AlamatToko) = repo.updateAlamatToko(data).asLiveData()
+
 }

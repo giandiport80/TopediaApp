@@ -272,7 +272,36 @@ class AppRepository(
             remoteDataSource.createAlamatToko(data).let {
                 if (it.isSuccessful) {
                     val body = it.body()?.data
-                    
+
+                    emit(Resource.success(body))
+                } else {
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                }
+            }
+        } catch (error: Exception) {
+            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
+        }
+    }
+
+    fun updateAlamatToko(data: AlamatToko) = flow {
+        emit(Resource.loading(null))
+        try {
+            remoteDataSource.updateAlamatToko(data).let {
+                if (it.isSuccessful) {
+                    val body = it.body()?.data
+
                     emit(Resource.success(body))
                 } else {
                     val errorResponse = it.errorBody()?.string()

@@ -68,7 +68,7 @@ class TambahAlamatTokoActivity : CustomeActivity() {
                 kecamatanId = null
             } else {
                 kecamatanId = 5505
-                kecamatan = listProvinsi[it]
+                kecamatan = listKecamatan[it]
             }
         }
     }

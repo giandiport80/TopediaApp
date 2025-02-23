@@ -66,4 +66,10 @@ interface ApiService {
         @Body data: AlamatToko,
     ): Response<BaseResponse<AlamatToko>>
 
+    @PUT("alamat/{id}")
+    suspend fun updateAlamatToko(
+        @Path("id") id: Int? = null,
+        @Body data: AlamatToko,
+    ): Response<BaseResponse<AlamatToko>>
+
 }

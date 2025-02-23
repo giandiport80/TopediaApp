@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.databinding.ItemAlamatTokoBinding
 import com.giandiport80.topediaapp.ui.alamatToko.EditAlamatTokoActivity
+import com.inyongtisto.myhelper.extension.intentActivity
 import com.inyongtisto.myhelper.extension.logs
 import com.inyongtisto.myhelper.extension.popUpMenu
+import com.inyongtisto.myhelper.extension.toJson
 
 class AlamatTokoAdapter : RecyclerView.Adapter<AlamatTokoAdapter.ViewHolder>() {
     private val data = ArrayList<AlamatToko>()
@@ -40,13 +42,12 @@ class AlamatTokoAdapter : RecyclerView.Adapter<AlamatTokoAdapter.ViewHolder>() {
                     val listMenu = listOf("Detail", "Hapus")
                     context.popUpMenu(btnMenu, listMenu) {
                         when (it) {
-                            "Detail" ->
-                                context.startActivity(
-                                    Intent(
-                                        context,
-                                        EditAlamatTokoActivity::class.java
-                                    )
+                            "Detail" -> {
+                                context.intentActivity(
+                                    EditAlamatTokoActivity::class.java,
+                                    item.toJson()
                                 )
+                            }
 
                             "Hapus" -> logs("Hapus")
                         }
