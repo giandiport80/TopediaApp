@@ -79,7 +79,7 @@ class CreateProductActivity : CustomeActivity() {
             lyToolbar.btnSimpan.visibility = View.VISIBLE
             lyToolbar.btnSimpan.setOnClickListener {
                 if (validate()) {
-                    simpanAlamat()
+                    create()
                 }
             }
 
@@ -132,8 +132,15 @@ class CreateProductActivity : CustomeActivity() {
         return true
     }
 
-    private fun simpanAlamat() {
-        val requestData = Product()
+    private fun create() {
+        val requestData = Product(
+            tokoId = getTokoId(),
+            name = "",
+            price = 0,
+            description = "",
+            weight = 0,
+            stock = 0,
+        )
         viewModel.createProduct(requestData).observe(this) {
             when (it.state) {
                 State.SUCCESS -> {
