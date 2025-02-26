@@ -1,6 +1,7 @@
 package com.giandiport80.topediaapp.core.data.source.remote.network
 
 import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
+import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
@@ -77,4 +78,26 @@ interface ApiService {
     suspend fun deleteAlamatToko(
         @Path("id") tokoId: Int? = null,
     ): Response<BaseResponse<AlamatToko>>
+
+
+    @GET("products/toko/{id}")
+    suspend fun getProduct(
+        @Path("id") tokoId: Int? = null,
+    ): Response<BaseListResponse<Product>>
+
+    @POST("products")
+    suspend fun createProduct(
+        @Body data: Product,
+    ): Response<BaseResponse<Product>>
+
+    @PUT("products/{id}")
+    suspend fun updateProduct(
+        @Path("id") id: Int? = null,
+        @Body data: Product,
+    ): Response<BaseResponse<Product>>
+
+    @DELETE("products/{id}")
+    suspend fun deleteProduct(
+        @Path("id") tokoId: Int? = null,
+    ): Response<BaseResponse<Product>>
 }

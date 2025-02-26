@@ -17,23 +17,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 
-class AppRepository(
+class AlamatRepository(
     private val local: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) {
-    fun login(data: LoginRequest) = flow {
+    fun getAlamatToko() = flow {
         emit(Resource.loading(null))
         try {
-            remoteDataSource.login(data).let {
+            remoteDataSource.getAlamatToko().let {
                 if (it.isSuccessful) {
-                    Prefs.isLogin = true
-                    Log.d("SUCCESS_LOGIN", "login sukses:" + it.body().toString())
-
                     val body = it.body()
-                    val user = body?.data
+                    val data = body?.data
 
-                    Prefs.setUser(user)
-                    emit(Resource.success(user))
+                    emit(Resource.success(data))
                 } else {
                     val errorResponse = it.errorBody()?.string()
                     val errorMessage = if (errorResponse != null) {
@@ -48,135 +44,18 @@ class AppRepository(
                     }
 
                     emit(Resource.error(errorMessage, null))
-                    Log.d("ERROR_LOGIN", "login error: $errorMessage")
                 }
             }
         } catch (error: Exception) {
             emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
-            Log.d("ERROR_LOGIN", "login error: ${error.message}")
         }
     }
 
-    fun register(data: RegisterRequest) = flow {
+    fun createAlamatToko(data: AlamatToko) = flow {
         emit(Resource.loading(null))
         try {
-            remoteDataSource.register(data).let {
+            remoteDataSource.createAlamatToko(data).let {
                 if (it.isSuccessful) {
-//                    Prefs.isLogin = true
-                    Log.d("SUCCESS_REGISTER", "register sukses:" + it.body().toString())
-
-                    val body = it.body()
-                    val user = body?.data
-
-//                    Prefs.setUser(user)
-                    emit(Resource.success(user))
-                } else {
-                    val errorResponse = it.errorBody()?.string()
-                    val errorMessage = if (errorResponse != null) {
-                        try {
-                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
-                            error.message ?: "Terjadi kesalahan"
-                        } catch (e: Exception) {
-                            "Terjadi kesalahan saat mengolah error"
-                        }
-                    } else {
-                        "Terjadi kesalahan"
-                    }
-
-                    emit(Resource.error(errorMessage, null))
-                    Log.d("ERROR_REGISTER", "register error: $errorMessage")
-                }
-            }
-        } catch (error: Exception) {
-            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
-            Log.d("ERROR_REGISTER", "register error: ${error.message}")
-        }
-    }
-
-    fun updateUser(data: UpdateProfileRequest) = flow {
-        emit(Resource.loading(null))
-        try {
-            remoteDataSource.updateUser(data).let {
-                if (it.isSuccessful) {
-                    Log.d(
-                        "SUCCESS_UPDATE_USER",
-                        "Update profile success sukses:" + it.body().toString()
-                    )
-
-                    val body = it.body()
-                    val user = body?.data
-
-                    Prefs.setUser(user)
-                    emit(Resource.success(user))
-                } else {
-                    val errorResponse = it.errorBody()?.string()
-                    val errorMessage = if (errorResponse != null) {
-                        try {
-                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
-                            error.message ?: "Terjadi kesalahan"
-                        } catch (e: Exception) {
-                            "Terjadi kesalahan saat mengolah error"
-                        }
-                    } else {
-                        "Terjadi kesalahan"
-                    }
-
-                    emit(Resource.error(errorMessage, null))
-                    Log.d("ERROR_UPDATE_USER", "update user error: $errorMessage")
-                }
-            }
-        } catch (error: Exception) {
-            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
-            Log.d("ERROR_UPDATE_USER", "update user error: ${error.message}")
-        }
-    }
-
-    fun uploadImageUser(id: Int, fileImage: MultipartBody.Part? = null) = flow {
-        emit(Resource.loading(null))
-        try {
-            remoteDataSource.uploadImageUser(id, fileImage)?.let {
-                if (it.isSuccessful) {
-                    Log.d(
-                        "SUCCESS_UPLOAD_USER",
-                        "Update profile success sukses:" + it.body().toString()
-                    )
-
-                    val body = it.body()
-                    val user = body?.data
-
-                    Prefs.setUser(user)
-                    emit(Resource.success(user))
-                } else {
-                    val errorResponse = it.errorBody()?.string()
-                    val errorMessage = if (errorResponse != null) {
-                        try {
-                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
-                            error.message ?: "Terjadi kesalahan"
-                        } catch (e: Exception) {
-                            "Terjadi kesalahan saat mengolah error"
-                        }
-                    } else {
-                        "Terjadi kesalahan"
-                    }
-
-                    emit(Resource.error(errorMessage, null))
-                    Log.d("ERROR_UPLOAD_USER", "update user error: $errorMessage")
-                }
-            }
-        } catch (error: Exception) {
-            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
-            Log.d("ERROR_UPLOAD_USER", "update user error: ${error.message}")
-        }
-    }
-
-    // MODUL TOKO
-    fun createToko(data: CreateTokoRequest) = flow {
-        emit(Resource.loading(null))
-        try {
-            remoteDataSource.createToko(data).let {
-                if (it.isSuccessful) {
-                    Log.d("SUCCESS", "sukses:" + it.body().toString())
-
                     val body = it.body()?.data
 
                     emit(Resource.success(body))
@@ -194,25 +73,21 @@ class AppRepository(
                     }
 
                     emit(Resource.error(errorMessage, null))
-                    Log.d("ERROR", "create toko error: $errorMessage")
                 }
             }
         } catch (error: Exception) {
             emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
-            Log.d("ERROR", "create toko error: ${error.message}")
         }
     }
 
-    fun getUser(id: Int) = flow {
+    fun updateAlamatToko(data: AlamatToko) = flow {
         emit(Resource.loading(null))
         try {
-            remoteDataSource.getUser(id)?.let {
+            remoteDataSource.updateAlamatToko(data).let {
                 if (it.isSuccessful) {
-                    val body = it.body()
-                    val user = body?.data
+                    val body = it.body()?.data
 
-                    Prefs.setUser(user)
-                    emit(Resource.success(user))
+                    emit(Resource.success(body))
                 } else {
                     val errorResponse = it.errorBody()?.string()
                     val errorMessage = if (errorResponse != null) {
@@ -227,12 +102,40 @@ class AppRepository(
                     }
 
                     emit(Resource.error(errorMessage, null))
-                    Log.d("ERROR_GET_USER", "get user error: $errorMessage")
                 }
             }
         } catch (error: Exception) {
             emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
-            Log.d("ERROR_GET_USER", "get user error: ${error.message}")
+        }
+    }
+
+    fun deleteAlamatToko(id: Int?) = flow {
+        emit(Resource.loading(null))
+        try {
+            remoteDataSource.deleteAlamatToko(id).let {
+                if (it.isSuccessful) {
+                    val body = it.body()
+                    val data = body?.data
+
+                    emit(Resource.success(data))
+                } else {
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                }
+            }
+        } catch (error: Exception) {
+            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
         }
     }
 }

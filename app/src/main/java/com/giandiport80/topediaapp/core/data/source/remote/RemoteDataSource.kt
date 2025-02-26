@@ -1,6 +1,7 @@
 package com.giandiport80.topediaapp.core.data.source.remote
 
 import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
+import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.network.ApiService
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
@@ -24,10 +25,12 @@ class RemoteDataSource(private val api: ApiService) {
     suspend fun getUser(id: Int? = null) = id?.let { api.getUser(it) }
 
     suspend fun getAlamatToko() = api.getAlamatToko(getTokoId())
-
     suspend fun createAlamatToko(data: AlamatToko) = api.createAlamatToko(data)
-
     suspend fun updateAlamatToko(data: AlamatToko) = api.updateAlamatToko(data.id, data)
-
     suspend fun deleteAlamatToko(id: Int?) = api.deleteAlamatToko(id)
+
+    suspend fun getProduct() = api.getProduct(getTokoId())
+    suspend fun createProduct(data: Product) = api.createProduct(data)
+    suspend fun updateProduct(data: Product) = api.updateProduct(data.id, data)
+    suspend fun deleteProduct(id: Int?) = api.deleteProduct(id)
 }
