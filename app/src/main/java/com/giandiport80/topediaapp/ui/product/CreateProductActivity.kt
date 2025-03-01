@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
-import com.giandiport80.topediaapp.databinding.ActivityTambahAlamatTokoBinding
+import com.giandiport80.topediaapp.databinding.ActivityCreateProductBinding
 import com.giandiport80.topediaapp.util.defaultError
 import com.giandiport80.topediaapp.util.getTokoId
 import com.inyongtisto.myhelper.base.CustomeActivity
@@ -16,7 +16,7 @@ import com.inyongtisto.myhelper.extension.showErrorDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateProductActivity : CustomeActivity() {
-    private lateinit var binding: ActivityTambahAlamatTokoBinding
+    private lateinit var binding: ActivityCreateProductBinding
     private val viewModel: ProductViewModel by viewModel()
     private var provinsiId: Int? = null
     private var kotaId: Int? = null
@@ -28,7 +28,7 @@ class CreateProductActivity : CustomeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityTambahAlamatTokoBinding.inflate(layoutInflater)
+        binding = ActivityCreateProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.lyToolbar.toolbar)
