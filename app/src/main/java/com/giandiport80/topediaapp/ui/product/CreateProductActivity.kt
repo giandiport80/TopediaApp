@@ -9,8 +9,10 @@ import com.giandiport80.topediaapp.databinding.ActivityCreateProductBinding
 import com.giandiport80.topediaapp.util.defaultError
 import com.giandiport80.topediaapp.util.getTokoId
 import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.addRupiahListener
 import com.inyongtisto.myhelper.extension.getString
 import com.inyongtisto.myhelper.extension.isEmpty
+import com.inyongtisto.myhelper.extension.remove
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.random.Random
@@ -46,6 +48,8 @@ class CreateProductActivity : CustomeActivity() {
                 }
             }
 
+            edtHarga.addRupiahListener()
+
             lyToolbar.btnSimpan.setOnLongClickListener {
                 edtName.setText("Mukena Cantik")
                 edtHarga.setText(Random.nextInt(10000, 90000).toString())
@@ -72,17 +76,18 @@ class CreateProductActivity : CustomeActivity() {
     private fun create() {
         val requestData = Product(
             tokoId = getTokoId(),
-            name = "",
-            price = 0,
-            description = "",
-            weight = 0,
-            stock = 0,
+            name = binding.edtName.text.toString(),
+            price = binding.edtHarga.text.toString().remove(",").toInt(),
+            description = binding.edtDeskripsi.text.toString(),
+            weight = binding.edtBerat.text.toString().toInt(),
+            stock = binding.edtStok.text.toString().toInt(),
+            imageReal = "testing.jpg"
         )
         viewModel.createProduct(requestData).observe(this) {
             when (it.state) {
                 State.SUCCESS -> {
                     progress.dismiss()
-                    Toast.makeText(this, "Alamat berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Produk berhasil ditambahkan", Toast.LENGTH_SHORT).show()
                     finish()
                 }
 
@@ -96,7 +101,6 @@ class CreateProductActivity : CustomeActivity() {
                 }
             }
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

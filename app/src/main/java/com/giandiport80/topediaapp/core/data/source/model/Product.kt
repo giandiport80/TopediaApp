@@ -8,6 +8,9 @@ data class Product(
     val harga: Int? = null,
     val price: Int?,
 
+    @SerializedName("images")
+    val imageReal: String? = null,
+
     @SerializedName("toko_id")
     val tokoId: Int? = null,
 
@@ -21,7 +24,7 @@ data class Product(
     val rating: Double? = null,
     val discount: Int? = null,
     val grosir: Boolean = false,
+
+    @SerializedName("image_dummy")
     val image: Int? = null,
-
-
-    )
+)
