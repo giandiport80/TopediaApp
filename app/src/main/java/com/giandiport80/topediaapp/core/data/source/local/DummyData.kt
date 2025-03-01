@@ -35,7 +35,8 @@ object DummyData {
             rating = 5.0,
             discount = 0,
             grosir = true,
-            image = R.drawable.asset_produk1
+            image = R.drawable.asset_produk1,
+            price = 150000
         ),
         Product(
             id = 2,
@@ -46,7 +47,8 @@ object DummyData {
             rating = 5.0,
             discount = 10,
             grosir = true,
-            image = R.drawable.asset_produk2
+            image = R.drawable.asset_produk2,
+            price = 150000
         ),
         Product(
             id = 3,
@@ -57,7 +59,8 @@ object DummyData {
             rating = 5.0,
             discount = 15,
             grosir = false,
-            image = R.drawable.asset_produk3
+            image = R.drawable.asset_produk3,
+            price = 150000,
         ),
         Product(
             id = 4,
@@ -68,7 +71,7 @@ object DummyData {
             rating = 5.0,
             discount = 0,
             grosir = true,
-            image = R.drawable.asset_produk4
+            image = R.drawable.asset_produk4, price = 150000,
         ),
         Product(
             id = 5,
@@ -79,7 +82,8 @@ object DummyData {
             rating = 5.0,
             discount = 15,
             grosir = false,
-            image = R.drawable.asset_produk5
+            image = R.drawable.asset_produk5,
+            price = 150000
         ),
         Product(
             id = 6,
@@ -90,7 +94,8 @@ object DummyData {
             rating = 5.0,
             discount = 20,
             grosir = false,
-            image = R.drawable.asset_produk6
+            image = R.drawable.asset_produk6,
+            price = 150000,
         ),
         Product(
             id = 7,
@@ -101,7 +106,8 @@ object DummyData {
             rating = 5.0,
             discount = 0,
             grosir = true,
-            image = R.drawable.asset_produk7
+            image = R.drawable.asset_produk7,
+            price = 150000,
         ),
         Product(
             id = 8,
@@ -112,7 +118,8 @@ object DummyData {
             rating = 5.0,
             discount = 10,
             grosir = false,
-            image = R.drawable.asset_produk8
+            image = R.drawable.asset_produk8,
+            price = 150000,
         ),
     )
 }

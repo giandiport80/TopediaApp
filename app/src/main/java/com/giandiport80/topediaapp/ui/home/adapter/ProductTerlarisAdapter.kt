@@ -27,9 +27,9 @@ class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewH
         fun bind(item: Product, position: Int) {
             itemBinding.apply {
                 val harga = item.harga ?: 0
-                imageView.setImageResource(item.image)
+                item.image?.let { imageView.setImageResource(it) }
                 tvName.text = item.name
-                tvHarga.text = Helper.toRupiah(item.harga)
+                tvHarga.text = item.harga?.let { Helper.toRupiah(it) }
                 tvPengiriman.text = item.pengiriman
                 tvRating.text = "" + item.rating + " | Terjual " + item.sold
 
@@ -41,7 +41,7 @@ class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewH
                     tvDiskon.text = "${item.discount}%"
 
                     tvHarga.text = hargaSetelahDiskon
-                    tvHargaAsli.text = Helper.toRupiah(item.harga)
+                    tvHargaAsli.text = item.harga?.let { Helper.toRupiah(it) }
                     tvHargaAsli.coret()
                 }
             }
