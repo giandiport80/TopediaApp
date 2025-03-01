@@ -3,27 +3,21 @@ package com.giandiport80.topediaapp.ui.product
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityCreateProductBinding
 import com.giandiport80.topediaapp.util.defaultError
 import com.giandiport80.topediaapp.util.getTokoId
 import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.getString
 import com.inyongtisto.myhelper.extension.isEmpty
-import com.inyongtisto.myhelper.extension.setOnPositionSelectedListener
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.random.Random
 
 class CreateProductActivity : CustomeActivity() {
     private lateinit var binding: ActivityCreateProductBinding
     private val viewModel: ProductViewModel by viewModel()
-    private var provinsiId: Int? = null
-    private var kotaId: Int? = null
-    private var kecamatanId: Int? = null
-    private var provinsi: String? = null
-    private var kota: String? = null
-    private var kecamatan: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,38 +34,7 @@ class CreateProductActivity : CustomeActivity() {
     }
 
     private fun setupUI() {
-        val listProvinsi: List<String> =
-            listOf("Pilih Provinsi", "Jawa Timur", "Jawa Tengah", "Jawa Barat")
-        val listKota: List<String> = listOf("Pilih Kota", "Lamongan", "Semarang", "Bogor")
-        val listKecamatan: List<String> =
-            listOf("Pilih Kecamatan", "Solokuro", "Ngalian", "Ngaglik")
 
-        binding.spnProvinsi.setOnPositionSelectedListener(this, listProvinsi) {
-            if (it == 0) {
-                provinsiId = null
-            } else {
-                provinsiId = 10 // jawa tengah
-                provinsi = listProvinsi[it]
-            }
-        }
-
-        binding.spnKota.setOnPositionSelectedListener(this, listKota) {
-            if (it == 0) {
-                kotaId = null
-            } else {
-                kotaId = 399
-                kota = listKota[it]
-            }
-        }
-
-        binding.spnKecamatan.setOnPositionSelectedListener(this, listKecamatan) {
-            if (it == 0) {
-                kecamatanId = null
-            } else {
-                kecamatanId = 5505
-                kecamatan = listKecamatan[it]
-            }
-        }
     }
 
     private fun mainButton() {
@@ -84,11 +47,11 @@ class CreateProductActivity : CustomeActivity() {
             }
 
             lyToolbar.btnSimpan.setOnLongClickListener {
-                edtLabelLokasi.setText("Rumah")
-                edtAlamat.setText("Jalan Kenangan no 12")
-                edtKodePos.setText("15520")
-                edtPhone.setText("089668958495")
-                edtEmail.setText("gian123@gmail.com")
+                edtName.setText("Mukena Cantik")
+                edtHarga.setText(Random.nextInt(10000, 90000).toString())
+                edtBerat.setText("1000")
+                edtStok.setText("10")
+                edtDeskripsi.setText("Deskripsi " + edtName.getString())
                 return@setOnLongClickListener true
             }
         }
@@ -96,37 +59,11 @@ class CreateProductActivity : CustomeActivity() {
 
     private fun validate(): Boolean {
         binding.apply {
-            if (edtLabelLokasi.isEmpty()) return false
-            if (edtAlamat.isEmpty()) return false
-            if (edtEmail.isEmpty()) return false
-            if (edtPhone.isEmpty()) return false
-
-            if (provinsiId == null) {
-                Toast.makeText(
-                    this@CreateProductActivity,
-                    "Harap pilih provinsi",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return false
-            }
-
-            if (kotaId == null) {
-                Toast.makeText(
-                    this@CreateProductActivity,
-                    "Harap pilih kota",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return false
-            }
-
-            if (kecamatanId == null) {
-                Toast.makeText(
-                    this@CreateProductActivity,
-                    "Harap pilih kecamatan",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return false
-            }
+            if (edtName.isEmpty()) return false
+            if (edtHarga.isEmpty()) return false
+            if (edtBerat.isEmpty()) return false
+            if (edtStok.isEmpty()) return false
+            if (edtDeskripsi.isEmpty()) return false
         }
 
         return true

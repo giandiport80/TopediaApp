@@ -26,6 +26,9 @@
             android:name=".ui.alamatToko.TambahAlamatTokoActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.product.CreateProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.alamatToko.ListAlamatTokoActivity"
             android:exported="false" />
         <activity

@@ -127,17 +127,94 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="@color/gray5"
         android:layout_marginTop="@dimen/_15sdp" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_15sdp">
+
+        <TextView
+            android:id="@+id/tv1"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/TypographyStyles.Text2.Bold"
+            android:layout_width="wrap_content"
+            android:textColor="@color/gray2"
+            android:textAllCaps="true"
+            android:layout_height="wrap_content"
+            android:text="Produk" />
+
+        <TextView
+            android:id="@id/btnTambahProduct"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/TypographyStyles.Text2.Bold"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_height="wrap_content"
+            android:text="Tambah Produk" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btnListProduct"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/btnTambahProduct"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_centerVertical="true"
+                android:textAppearance="@style/TypographyStyles.Text1.Bold"
+                android:layout_width="wrap_content"
+                android:textColor="@color/gray2"
+                android:layout_height="wrap_content"
+                android:text="Daftar Produk" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tvDaftarProduct"
+                app:layout_constraintTop_toTopOf="@id/btnTambahProduct"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tvProducts"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_right_black_24dp"
+                app:tint="@color/gray3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/btnTambahProduct"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="1 Produk"
+                android:textAppearance="@style/TypographyStyles.Text2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/btnAlamat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_15sdp"
+
         android:orientation="vertical">
 
         <TextView
@@ -166,6 +243,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Alamat"
+                android:textAppearance="@style/TypographyStyles.Text2"
+                android:layout_marginStart="@dimen/_8sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_placeholder"
+                app:tint="@color/gray3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Produk"
                 android:textAppearance="@style/TypographyStyles.Text2"
                 android:layout_marginStart="@dimen/_8sdp" />
         </LinearLayout>
