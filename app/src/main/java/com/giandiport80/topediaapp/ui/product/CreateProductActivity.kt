@@ -1,25 +1,35 @@
 package com.giandiport80.topediaapp.ui.product
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityCreateProductBinding
+import com.giandiport80.topediaapp.ui.product.adapter.AddImageAdapter
 import com.giandiport80.topediaapp.util.defaultError
 import com.giandiport80.topediaapp.util.getTokoId
+import com.github.drjacky.imagepicker.ImagePicker
 import com.inyongtisto.myhelper.base.CustomeActivity
 import com.inyongtisto.myhelper.extension.addRupiahListener
 import com.inyongtisto.myhelper.extension.getString
 import com.inyongtisto.myhelper.extension.isEmpty
 import com.inyongtisto.myhelper.extension.remove
 import com.inyongtisto.myhelper.extension.showErrorDialog
+import com.inyongtisto.myhelper.extension.toMultipartBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 import kotlin.random.Random
 
 class CreateProductActivity : CustomeActivity() {
     private lateinit var binding: ActivityCreateProductBinding
     private val viewModel: ProductViewModel by viewModel()
+    private val adapterImage = AddImageAdapter(onAddImage = {
+        pickImage()
+    })
+    private var listImages = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +43,17 @@ class CreateProductActivity : CustomeActivity() {
 
         setupUI()
         mainButton()
+        setupImageProduct()
     }
 
     private fun setupUI() {
 
+    }
+
+    private fun setupImageProduct() {
+        listImages.add("")
+        adapterImage.addItems(listImages)
+        binding.rvImage.adapter = adapterImage
     }
 
     private fun mainButton() {
@@ -106,5 +123,58 @@ class CreateProductActivity : CustomeActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri = it.data?.data!!
+                val fileImage = File(uri.path!!)
+                upload(fileImage)
+//                Picasso.get().load(uri)
+//                    .into(binding.imageProfile)
+            }
+        }
+
+    private fun upload(fileImage: File) {
+        val file = fileImage.toMultipartBody()
+
+        if (file != null) {
+            viewModel.uploadProduct(file).observe(this) { it ->
+                when (it.state) {
+                    State.SUCCESS -> {
+                        progress.dismiss()
+
+                        val tempImage =
+                            listImages.filter { image -> image.isNotEmpty() } as ArrayList
+                        tempImage.add(it.data ?: "image")
+                        tempImage.add("")
+                        listImages = tempImage
+                        adapterImage.addItems(tempImage)
+                    }
+
+                    State.ERROR -> {
+                        Toast.makeText(applicationContext, it?.message, Toast.LENGTH_SHORT)
+                            .show()
+                        progress.dismiss()
+                    }
+
+                    State.LOADING -> {
+                        progress.show()
+                    }
+                }
+            }
+        } else {
+            Toast.makeText(this, "Image tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun pickImage() {
+        ImagePicker.with(this)
+            .crop()
+            .maxResultSize(620, 620)
+            .createIntentFromDialog {
+                launcher.launch(it)
+            }
     }
 }

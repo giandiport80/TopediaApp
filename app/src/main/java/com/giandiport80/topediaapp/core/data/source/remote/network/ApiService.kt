@@ -100,4 +100,10 @@ interface ApiService {
     suspend fun deleteProduct(
         @Path("id") tokoId: Int? = null,
     ): Response<BaseResponse<Product>>
+
+    @Multipart
+    @POST("upload/product")
+    suspend fun uploadProduct(
+        @Part data: MultipartBody.Part? = null
+    ): Response<BaseResponse<String>>
 }

@@ -12,16 +12,12 @@ import okhttp3.MultipartBody
 
 class RemoteDataSource(private val api: ApiService) {
     suspend fun login(data: LoginRequest) = api.login(data)
-
     suspend fun register(data: RegisterRequest) = api.register(data)
-
     suspend fun updateUser(data: UpdateProfileRequest) = api.updateUser(data.id, data)
-
     suspend fun uploadImageUser(id: Int, fileImage: MultipartBody.Part? = null) =
         fileImage?.let { api.uploadImageUser(id, it) }
 
     suspend fun createToko(data: CreateTokoRequest) = api.createToko(data)
-
     suspend fun getUser(id: Int? = null) = id?.let { api.getUser(it) }
 
     suspend fun getAlamatToko() = api.getAlamatToko(getTokoId())
@@ -33,4 +29,6 @@ class RemoteDataSource(private val api: ApiService) {
     suspend fun createProduct(data: Product) = api.createProduct(data)
     suspend fun updateProduct(data: Product) = api.updateProduct(data.id, data)
     suspend fun deleteProduct(id: Int?) = api.deleteProduct(id)
+    suspend fun uploadProduct(fileImage: MultipartBody.Part? = null) =
+        fileImage?.let { api.uploadProduct(it) }
 }
