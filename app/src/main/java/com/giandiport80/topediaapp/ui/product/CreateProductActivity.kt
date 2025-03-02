@@ -147,8 +147,14 @@ class CreateProductActivity : CustomeActivity() {
 
                         val tempImage =
                             listImages.filter { image -> image.isNotEmpty() } as ArrayList
-                        tempImage.add(it.data ?: "image")
-                        tempImage.add("")
+                        tempImage.add(it.data!!)
+
+                        if (tempImage.size < 5) {
+                            tempImage.add("")
+                        } else {
+                            binding.btnTambahFoto.visibility = View.GONE
+                        }
+                            
                         listImages = tempImage
                         adapterImage.addItems(tempImage)
                     }
