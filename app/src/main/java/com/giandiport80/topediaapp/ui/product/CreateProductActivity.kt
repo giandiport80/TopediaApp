@@ -19,6 +19,7 @@ import com.inyongtisto.myhelper.extension.isEmpty
 import com.inyongtisto.myhelper.extension.remove
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import com.inyongtisto.myhelper.extension.toMultipartBody
+import com.inyongtisto.myhelper.extension.toVisible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import kotlin.random.Random
@@ -26,9 +27,11 @@ import kotlin.random.Random
 class CreateProductActivity : CustomeActivity() {
     private lateinit var binding: ActivityCreateProductBinding
     private val viewModel: ProductViewModel by viewModel()
-    private val adapterImage = AddImageAdapter(onAddImage = {
-        pickImage()
-    })
+    private val adapterImage = AddImageAdapter(
+        onAddImage = { pickImage() },
+        onDeleteImage = { removeImage(it) }
+    )
+
     private var listImages = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +94,12 @@ class CreateProductActivity : CustomeActivity() {
     }
 
     private fun create() {
+        var images = ""
+        listImages.forEach {
+            if (it.isNotEmpty()) images += "$it|"
+        }
+        images = images.dropLast(1)
+
         val requestData = Product(
             tokoId = getTokoId(),
             name = binding.edtName.text.toString(),
@@ -98,8 +107,9 @@ class CreateProductActivity : CustomeActivity() {
             description = binding.edtDeskripsi.text.toString(),
             weight = binding.edtBerat.text.toString().toInt(),
             stock = binding.edtStok.text.toString().toInt(),
-            imageReal = "testing.jpg"
+            imageReal = images
         )
+
         viewModel.createProduct(requestData).observe(this) {
             when (it.state) {
                 State.SUCCESS -> {
@@ -131,10 +141,19 @@ class CreateProductActivity : CustomeActivity() {
                 val uri = it.data?.data!!
                 val fileImage = File(uri.path!!)
                 upload(fileImage)
-//                Picasso.get().load(uri)
-//                    .into(binding.imageProfile)
             }
         }
+
+    private fun removeImage(index: Int) {
+        listImages.removeAt(index)
+        adapterImage.removeAt(index)
+
+        if (!listImages.any { it.isEmpty() }) {
+            listImages.add("")
+            adapterImage.addItems(listImages)
+            binding.btnTambahFoto.toVisible()
+        }
+    }
 
     private fun upload(fileImage: File) {
         val file = fileImage.toMultipartBody()
@@ -154,7 +173,7 @@ class CreateProductActivity : CustomeActivity() {
                         } else {
                             binding.btnTambahFoto.visibility = View.GONE
                         }
-                            
+
                         listImages = tempImage
                         adapterImage.addItems(tempImage)
                     }

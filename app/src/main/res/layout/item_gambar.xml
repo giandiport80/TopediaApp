@@ -36,7 +36,7 @@
         android:layout_height="25dp"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_close_circle"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </RelativeLayout>
 
