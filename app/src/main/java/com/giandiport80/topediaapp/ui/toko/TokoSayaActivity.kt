@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.giandiport80.topediaapp.databinding.ActivityTokoSayaBinding
 import com.giandiport80.topediaapp.ui.alamatToko.ListAlamatTokoActivity
 import com.giandiport80.topediaapp.ui.product.CreateProductActivity
+import com.giandiport80.topediaapp.ui.product.ListProductTokoActivity
 import com.giandiport80.topediaapp.util.Constant
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
@@ -36,6 +37,11 @@ class TokoSayaActivity : AppCompatActivity() {
 
             btnTambahProduct.setOnClickListener {
                 val intent = Intent(this@TokoSayaActivity, CreateProductActivity::class.java)
+                startActivity(intent)
+            }
+
+            btnListProduct.setOnClickListener {
+                val intent = Intent(this@TokoSayaActivity, ListProductTokoActivity::class.java)
                 startActivity(intent)
             }
         }
