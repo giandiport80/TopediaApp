@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
-import com.giandiport80.topediaapp.databinding.ActivityCreateProductBinding
+import com.giandiport80.topediaapp.databinding.ActivityUpdateProductBinding
 import com.giandiport80.topediaapp.ui.product.adapter.AddImageAdapter
 import com.giandiport80.topediaapp.util.defaultError
 import com.giandiport80.topediaapp.util.getTokoId
@@ -16,6 +16,7 @@ import com.inyongtisto.myhelper.base.CustomeActivity
 import com.inyongtisto.myhelper.extension.addRupiahListener
 import com.inyongtisto.myhelper.extension.getString
 import com.inyongtisto.myhelper.extension.isEmpty
+import com.inyongtisto.myhelper.extension.onChangeRupiah
 import com.inyongtisto.myhelper.extension.remove
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import com.inyongtisto.myhelper.extension.toMultipartBody
@@ -24,26 +25,29 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import kotlin.random.Random
 
-class CreateProductActivity : CustomeActivity() {
-    private lateinit var binding: ActivityCreateProductBinding
+class UpdateProductActivity : CustomeActivity() {
+    private lateinit var binding: ActivityUpdateProductBinding
     private val viewModel: ProductViewModel by viewModel()
     private val adapterImage = AddImageAdapter(
         onAddImage = { pickImage() },
         onDeleteImage = { removeImage(it) }
     )
 
+    private var product: Product? = null
+
     private var listImages = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCreateProductBinding.inflate(layoutInflater)
+        binding = ActivityUpdateProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.lyToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Tambah Produk"
+        supportActionBar?.title = "Edit Produk"
 
+        getIntentExtra()
         setupUI()
         mainButton()
         setupImageProduct()
@@ -53,8 +57,35 @@ class CreateProductActivity : CustomeActivity() {
 
     }
 
+    private fun getIntentExtra() {
+        product = intent.getParcelableExtra("product")
+
+        binding.apply {
+            product?.let {
+                edtHarga.addRupiahListener { }
+                edtName.setText(it.name)
+                edtHarga.setText(it.price.toString())
+                edtBerat.setText(it.weight.toString())
+                edtStok.setText(it.stock.toString())
+                edtDeskripsi.setText(it.description)
+            }
+        }
+    }
+
     private fun setupImageProduct() {
-        listImages.add("")
+        val splitImages = product?.imageReal?.split("|")
+        if (!splitImages.isNullOrEmpty()) {
+            splitImages.forEach {
+                listImages.add(it)
+            }
+        }
+
+        if (listImages.size < 5) {
+            listImages.add("")
+        } else {
+            binding.btnTambahFoto.visibility = View.GONE
+        }
+
         adapterImage.addItems(listImages)
         binding.rvImage.adapter = adapterImage
     }
@@ -64,7 +95,7 @@ class CreateProductActivity : CustomeActivity() {
             lyToolbar.btnSimpan.visibility = View.VISIBLE
             lyToolbar.btnSimpan.setOnClickListener {
                 if (validate()) {
-                    create()
+                    update()
                 }
             }
 
@@ -93,7 +124,7 @@ class CreateProductActivity : CustomeActivity() {
         return true
     }
 
-    private fun create() {
+    private fun update() {
         var images = ""
         listImages.forEach {
             if (it.isNotEmpty()) images += "$it|"
@@ -101,6 +132,7 @@ class CreateProductActivity : CustomeActivity() {
         images = images.dropLast(1)
 
         val requestData = Product(
+            id = product?.id,
             tokoId = getTokoId(),
             name = binding.edtName.text.toString(),
             price = binding.edtHarga.text.toString().remove(",").toInt(),
@@ -110,7 +142,7 @@ class CreateProductActivity : CustomeActivity() {
             imageReal = images
         )
 
-        viewModel.createProduct(requestData).observe(this) {
+        viewModel.updateProduct(requestData).observe(this) {
             when (it.state) {
                 State.SUCCESS -> {
                     progress.dismiss()

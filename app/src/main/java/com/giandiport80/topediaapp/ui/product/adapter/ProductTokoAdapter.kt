@@ -18,7 +18,10 @@ import com.inyongtisto.myhelper.extension.toJson
 import com.inyongtisto.myhelper.extension.toRupiah
 import com.squareup.picasso.Picasso
 
-class ProductTokoAdapter(var onDelete: (item: Product, position: Int) -> Unit) :
+class ProductTokoAdapter(
+    val onDelete: (item: Product, position: Int) -> Unit,
+    val onClick: (item: Product) -> Unit,
+) :
     RecyclerView.Adapter<ProductTokoAdapter.ViewHolder>() {
     private val data = ArrayList<Product>()
 
@@ -45,6 +48,14 @@ class ProductTokoAdapter(var onDelete: (item: Product, position: Int) -> Unit) :
                 }
 
                 imgProduct.setImagePicasso(imageProduct.toUrlProduct())
+
+                btnEdit.setOnClickListener {
+                    onClick(item)
+                }
+
+                lyMain.setOnClickListener {
+                    onClick(item)
+                }
             }
         }
     }

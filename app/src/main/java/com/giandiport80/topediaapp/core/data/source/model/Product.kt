@@ -1,7 +1,10 @@
 package com.giandiport80.topediaapp.core.data.source.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Product(
     val id: Int? = null,
     val name: String?,
@@ -27,4 +30,4 @@ data class Product(
 
     @SerializedName("image_dummy")
     val image: Int? = null,
-)
+) : Parcelable

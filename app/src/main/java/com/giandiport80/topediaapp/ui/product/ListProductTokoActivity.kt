@@ -10,6 +10,7 @@ import com.giandiport80.topediaapp.databinding.ActivityListProductTokoBinding
 import com.giandiport80.topediaapp.ui.product.adapter.ProductTokoAdapter
 import com.giandiport80.topediaapp.util.defaultError
 import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.intentActivity
 import com.inyongtisto.myhelper.extension.showConfirmDialog
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,9 +18,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ListProductTokoActivity() : CustomeActivity() {
     private lateinit var binding: ActivityListProductTokoBinding
     private val viewModel: ProductViewModel by viewModel()
-    private var adapter = ProductTokoAdapter { item, position ->
-        confirmDeleteProduct(item, position)
-    }
+    private var adapter = ProductTokoAdapter(
+        onDelete = { item, position ->
+            confirmDeleteProduct(item, position)
+        },
+        onClick = {
+            val intent = Intent(this, UpdateProductActivity::class.java)
+            intent.putExtra("product", it)
+            startActivity(intent)
+        })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
