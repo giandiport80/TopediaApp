@@ -56,6 +56,10 @@ class ProductTokoAdapter(
                 lyMain.setOnClickListener {
                     onClick(item)
                 }
+
+                btnDelete.setOnClickListener {
+                    onDelete(item, adapterPosition)
+                }
             }
         }
     }

@@ -111,7 +111,7 @@ class ProductRepository(
                     val body = it.body()
                     val data = body?.data
 
-                    emit(Resource.success(data))
+                    emit(Resource.success(data, body?.message))
                 } else {
                     val errorResponse = it.errorBody()?.string()
                     val errorMessage = if (errorResponse != null) {

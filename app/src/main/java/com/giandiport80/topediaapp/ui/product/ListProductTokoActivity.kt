@@ -50,7 +50,7 @@ class ListProductTokoActivity() : CustomeActivity() {
                 State.SUCCESS -> {
                     progress.dismiss()
                     adapter.removeAt(position)
-                    Toast.makeText(this, "Alamat berhasil dihapus", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
 
                 State.ERROR -> {

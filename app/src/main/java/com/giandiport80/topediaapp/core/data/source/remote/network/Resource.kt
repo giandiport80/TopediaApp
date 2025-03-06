@@ -7,9 +7,8 @@ data class Resource<out T>(
     val loading: Boolean = false
 ) {
     companion object {
-
-        fun <T> success(data: T?): Resource<T> {
-            return Resource(State.SUCCESS, data, null)
+        fun <T> success(data: T?, message: String? = null): Resource<T> {
+            return Resource(State.SUCCESS, data, message)
         }
 
         fun <T> error(msg: String, data: T?): Resource<T> {
