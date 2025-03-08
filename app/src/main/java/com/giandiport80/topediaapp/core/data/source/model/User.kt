@@ -26,4 +26,9 @@ data class User(
 
     var toko: Toko?,
 
-    )
+    @SerializedName("user_role")
+    val userRole: UserRole? = null
+
+) {
+    fun isAdmin() = userRole?.isAdmin ?: false
+}

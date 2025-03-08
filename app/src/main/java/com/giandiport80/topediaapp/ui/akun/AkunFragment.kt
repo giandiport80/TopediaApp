@@ -14,6 +14,7 @@ import com.giandiport80.topediaapp.ui.toko.TokoSayaActivity
 import com.giandiport80.topediaapp.util.Constant
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.Prefs
+import com.inyongtisto.myhelper.extension.visible
 import com.squareup.picasso.Picasso
 
 class AkunFragment : Fragment() {
@@ -79,6 +80,12 @@ class AkunFragment : Fragment() {
                         val intent = Intent(context, BukaTokoActivity::class.java)
                         startActivity(intent)
                     }
+                }
+
+                if (user.isAdmin()) {
+                    btnAdmin.visibility = View.VISIBLE
+                } else {
+                    btnAdmin.visibility = View.GONE
                 }
             }
         }
