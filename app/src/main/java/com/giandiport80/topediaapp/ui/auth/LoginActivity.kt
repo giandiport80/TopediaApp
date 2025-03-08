@@ -9,12 +9,13 @@ import com.giandiport80.topediaapp.ui.navigation.NavigationActivity
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.databinding.ActivityLoginBinding
+import com.inyongtisto.myhelper.base.CustomeActivity
 import com.inyongtisto.myhelper.extension.dismisLoading
 import com.inyongtisto.myhelper.extension.isEmpty
 import com.inyongtisto.myhelper.extension.showLoading
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : CustomeActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private val viewModel: AuthViewModel by viewModel() // di
 
@@ -61,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
             var message = ""
             when (it.state) {
                 State.SUCCESS -> {
-                    dismisLoading()
+                    progress.dismiss()
                     message = "Berhasil login, selamat datang ${it?.data?.name}"
 
                     val i = Intent(this@LoginActivity, NavigationActivity::class.java)
@@ -71,12 +72,12 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 State.ERROR -> {
-                    dismisLoading()
+                    progress.dismiss()
                     message = it.message ?: "Error"
                 }
 
                 State.LOADING -> {
-                    showLoading()
+                    progress.show()
                 }
             }
 

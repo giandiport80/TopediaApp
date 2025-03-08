@@ -33,6 +33,9 @@ class AppRepository(
                     val user = body?.data
 
                     Prefs.setUser(user)
+                    if (user != null) {
+                        Prefs.token = user.token.toString()
+                    }
                     emit(Resource.success(user))
                 } else {
                     val errorResponse = it.errorBody()?.string()

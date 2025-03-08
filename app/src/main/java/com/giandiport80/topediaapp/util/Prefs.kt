@@ -12,6 +12,7 @@ import com.inyongtisto.myhelper.extension.toModel
 object Prefs : KotprefModel() {
     var isLogin by booleanPref(false)
     private var user by stringPref()
+    public var token by stringPref()
 
     fun setUser(userData: User?) {
         user = Gson().toJson(userData)
