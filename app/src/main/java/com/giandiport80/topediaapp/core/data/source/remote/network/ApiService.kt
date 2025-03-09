@@ -108,23 +108,21 @@ interface ApiService {
         @Part data: MultipartBody.Part? = null
     ): Response<BaseResponse<String>>
 
-    @GET("alamat/toko/{id}")
-    suspend fun getCategory(
-        @Path("id") tokoId: Int? = null,
-    ): Response<BaseListResponse<Category>>
+    @GET("category")
+    suspend fun getCategory(): Response<BaseListResponse<Category>>
 
-    @POST("alamat")
+    @POST("category")
     suspend fun createCategory(
         @Body data: Category,
     ): Response<BaseResponse<Category>>
 
-    @PUT("alamat/{id}")
+    @PUT("category/{id}")
     suspend fun updateCategory(
         @Path("id") id: Int? = null,
         @Body data: Category,
     ): Response<BaseResponse<Category>>
 
-    @DELETE("alamat/{id}")
+    @DELETE("category/{id}")
     suspend fun deleteCategory(
         @Path("id") tokoId: Int? = null,
     ): Response<BaseResponse<Category>>

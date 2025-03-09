@@ -1,6 +1,5 @@
 package com.giandiport80.topediaapp.ui.category
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -33,7 +32,7 @@ class ListCategoryAdminActivity() : CustomeActivity() {
 
         setSupportActionBar(binding.lyToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Daftar Alamat"
+        supportActionBar?.title = "Daftar Category"
 
         mainButton()
         getData()

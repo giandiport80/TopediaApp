@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.giandiport80.topediaapp.ui.navigation.NavigationActivity
 import com.giandiport80.topediaapp.databinding.FragmentAkunBinding
+import com.giandiport80.topediaapp.ui.adminpanel.AdminPanelActivity
 import com.giandiport80.topediaapp.ui.profile.UpdateProfileActivity
 import com.giandiport80.topediaapp.ui.toko.BukaTokoActivity
 import com.giandiport80.topediaapp.ui.toko.TokoSayaActivity
@@ -86,6 +87,11 @@ class AkunFragment : Fragment() {
                     btnAdmin.visibility = View.VISIBLE
                 } else {
                     btnAdmin.visibility = View.GONE
+                }
+
+                btnAdmin.setOnClickListener {
+                    val intent = Intent(context, AdminPanelActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
