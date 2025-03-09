@@ -1,6 +1,7 @@
 package com.giandiport80.topediaapp.core.data.source.remote
 
 import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
+import com.giandiport80.topediaapp.core.data.source.model.Category
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.network.ApiService
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
@@ -31,4 +32,9 @@ class RemoteDataSource(private val api: ApiService) {
     suspend fun deleteProduct(id: Int?) = api.deleteProduct(id)
     suspend fun uploadProduct(fileImage: MultipartBody.Part? = null) =
         fileImage?.let { api.uploadProduct(it) }
+
+    suspend fun getCategory() = api.getCategory(getTokoId())
+    suspend fun createCategory(data: Category) = api.createCategory(data)
+    suspend fun updateCategory(data: Category) = api.updateCategory(data.id, data)
+    suspend fun deleteCategory(id: Int?) = api.deleteCategory(id)
 }
