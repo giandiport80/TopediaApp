@@ -1,5 +1,6 @@
 package com.giandiport80.topediaapp.core.di
 
+import com.giandiport80.topediaapp.core.data.repository.BaseViewModel
 import com.giandiport80.topediaapp.ui.alamatToko.AlamatTokoViewModel
 import com.giandiport80.topediaapp.ui.auth.AuthViewModel
 import com.giandiport80.topediaapp.ui.category.CategoryViewModel
@@ -16,4 +17,5 @@ val viewModelModule = module {
     viewModel { AlamatTokoViewModel(get()) }
     viewModel { ProductViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
+    viewModel { BaseViewModel(get()) }
 }

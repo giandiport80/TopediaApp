@@ -26,6 +26,9 @@
             android:name=".ui.category.ListCategoryAdminActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.category.CreateCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.product.ListProductTokoActivity"
             android:exported="false" />
         <activity

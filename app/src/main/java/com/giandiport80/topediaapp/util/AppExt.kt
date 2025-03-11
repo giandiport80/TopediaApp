@@ -8,6 +8,6 @@ fun String?.toUrlProduct(): String {
     return Constant.PRODUCT_URL + this
 }
 
-fun String?.toUrlCategory() = Constant.BASE_URL + "storage/category/" + this
+fun String?.toUrlCategory() = Constant.BASE_URL + "storage/uploads/category/" + this
 
-fun String?.toUrlSlider() = Constant.BASE_URL + "storage/slider/" + this
+fun String?.toUrlSlider() = Constant.BASE_URL + "storage/uploads/slider/" + this

@@ -6,11 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Category(
-    val id: Int?,
-    val name: String?,
+    val id: Int? = null,
+    val name: String? = null,
 
     @SerializedName("image_dummy")
-    val image: Int,
+    val image: Int? = null,
 
     @SerializedName("image")
     val imageReal: String? = null

@@ -1,5 +1,6 @@
 package com.giandiport80.topediaapp.ui.category
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -80,9 +81,9 @@ class ListCategoryAdminActivity() : CustomeActivity() {
         binding.apply {
             lyToolbar.btnTambah.visibility = View.VISIBLE
             lyToolbar.btnTambah.setOnClickListener {
-//                val intent =
-//                    Intent(this@ListCategoryAdminActivity, TambahAlamatTokoActivity::class.java)
-//                startActivity(intent)
+                val intent =
+                    Intent(this@ListCategoryAdminActivity, CreateCategoryActivity::class.java)
+                startActivity(intent)
             }
         }
     }

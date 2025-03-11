@@ -37,4 +37,7 @@ class RemoteDataSource(private val api: ApiService) {
     suspend fun createCategory(data: Category) = api.createCategory(data)
     suspend fun updateCategory(data: Category) = api.updateCategory(data.id, data)
     suspend fun deleteCategory(id: Int?) = api.deleteCategory(id)
+
+    suspend fun uploadImage(path: String, fileImage: MultipartBody.Part? = null) =
+        fileImage?.let { api.uploadImage(path, fileImage) }
 }

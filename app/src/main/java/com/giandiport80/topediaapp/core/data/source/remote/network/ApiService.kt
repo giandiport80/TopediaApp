@@ -126,4 +126,11 @@ interface ApiService {
     suspend fun deleteCategory(
         @Path("id") tokoId: Int? = null,
     ): Response<BaseResponse<Category>>
+
+    @Multipart
+    @POST("upload/{id}")
+    suspend fun uploadImage(
+        @Path("id") id: String? = null,
+        @Part data: MultipartBody.Part? = null
+    ): Response<BaseResponse<String>>
 }

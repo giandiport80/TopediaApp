@@ -21,7 +21,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         fun bind(item: Category, position: Int) {
             itemBinding.apply {
                 textViewName.text = item.name
-                imageView.setImageResource(item.image)
+                item.image?.let { imageView.setImageResource(it) }
             }
         }
     }
