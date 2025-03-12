@@ -11,9 +11,12 @@ import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityCreateCategoryBinding
 import com.giandiport80.topediaapp.ui.product.adapter.AddImageAdapter
 import com.giandiport80.topediaapp.util.defaultError
+import com.giandiport80.topediaapp.util.toUrlCategory
 import com.github.drjacky.imagepicker.ImagePicker
 import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.extra
 import com.inyongtisto.myhelper.extension.isEmpty
+import com.inyongtisto.myhelper.extension.setImagePicasso
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import com.inyongtisto.myhelper.extension.toMultipartBody
 import com.inyongtisto.myhelper.extension.toastWarning
@@ -25,6 +28,8 @@ class CreateCategoryActivity : CustomeActivity() {
     private lateinit var binding: ActivityCreateCategoryBinding
     private val viewModel: CategoryViewModel by viewModel()
     private val viewModelBase: BaseViewModel by viewModel()
+    private val category by extra<Category>()
+
     private val adapterImage = AddImageAdapter(
         onAddImage = { pickImage() },
         onDeleteImage = { removeImage(it) }
@@ -39,24 +44,39 @@ class CreateCategoryActivity : CustomeActivity() {
         binding = ActivityCreateCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val title = if (category == null) "Tambah Category" else "Edit Category"
+
         setSupportActionBar(binding.lyToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Tambah Category"
+        supportActionBar?.title = title
 
         setupUI()
         mainButton()
     }
 
     private fun setupUI() {
-
+        category?.let {
+            binding.apply {
+                edtName.setText(it.name)
+                btnAddFoto.setImagePicasso(it.imageReal.toUrlCategory())
+            }
+        }
     }
 
     private fun mainButton() {
         binding.apply {
             lyToolbar.btnSimpan.visibility = View.VISIBLE
             lyToolbar.btnSimpan.setOnClickListener {
-                if (validate()) {
-                    upload()
+                if (category == null) {
+                    if (validate()) {
+                        upload()
+                    }
+                } else {
+                    if (fileImage != null) {
+                        upload()
+                    } else {
+                        update()
+                    }
                 }
             }
 
@@ -89,6 +109,33 @@ class CreateCategoryActivity : CustomeActivity() {
                 State.SUCCESS -> {
                     progress.dismiss()
                     Toast.makeText(this, "Category berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+
+                State.ERROR -> {
+                    progress.dismiss()
+                    showErrorDialog(it.message.defaultError())
+                }
+
+                State.LOADING -> {
+                    progress.show()
+                }
+            }
+        }
+    }
+
+    private fun update(imageName: String? = null) {
+        val requestData = Category(
+            name = binding.edtName.text.toString(),
+            imageReal = imageName ?: category?.imageReal,
+            id = category?.id
+        )
+
+        viewModel.updateCategory(requestData).observe(this) {
+            when (it.state) {
+                State.SUCCESS -> {
+                    progress.dismiss()
+                    Toast.makeText(this, "Category berhasil diubah", Toast.LENGTH_SHORT).show()
                     finish()
                 }
 
@@ -139,7 +186,11 @@ class CreateCategoryActivity : CustomeActivity() {
                         progress.dismiss()
                         val imageName = it.data
                         if (imageName != null) {
-                            create(imageName)
+                            if (category == null) {
+                                create(imageName)
+                            } else {
+                                update(imageName)
+                            }
                         }
                     }
 

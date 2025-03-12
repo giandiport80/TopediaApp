@@ -10,6 +10,7 @@ import com.giandiport80.topediaapp.databinding.ActivityListCategoryAdminBinding
 import com.giandiport80.topediaapp.ui.category.adapter.CategoryAdminAdapter
 import com.giandiport80.topediaapp.util.defaultError
 import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.intentActivity
 import com.inyongtisto.myhelper.extension.showConfirmDialog
 import com.inyongtisto.myhelper.extension.showErrorDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +23,7 @@ class ListCategoryAdminActivity() : CustomeActivity() {
             confirmDelete(item, position)
         },
         onClick = {
-
+            intentActivity(CreateCategoryActivity::class.java, it)
         })
 
     override fun onCreate(savedInstanceState: Bundle?) {
