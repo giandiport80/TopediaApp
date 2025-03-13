@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.giandiport80.topediaapp.core.data.source.model.Category
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.ActivityCreateProductBinding
+import com.giandiport80.topediaapp.ui.category.SelectCategoryActivity
 import com.giandiport80.topediaapp.ui.product.adapter.AddImageAdapter
 import com.giandiport80.topediaapp.util.defaultError
 import com.giandiport80.topediaapp.util.getTokoId
@@ -15,9 +17,11 @@ import com.github.drjacky.imagepicker.ImagePicker
 import com.inyongtisto.myhelper.base.CustomeActivity
 import com.inyongtisto.myhelper.extension.addRupiahListener
 import com.inyongtisto.myhelper.extension.getString
+import com.inyongtisto.myhelper.extension.intentActivityResult
 import com.inyongtisto.myhelper.extension.isEmpty
 import com.inyongtisto.myhelper.extension.remove
 import com.inyongtisto.myhelper.extension.showErrorDialog
+import com.inyongtisto.myhelper.extension.toModel
 import com.inyongtisto.myhelper.extension.toMultipartBody
 import com.inyongtisto.myhelper.extension.toVisible
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,6 +31,7 @@ import kotlin.random.Random
 class CreateProductActivity : CustomeActivity() {
     private lateinit var binding: ActivityCreateProductBinding
     private val viewModel: ProductViewModel by viewModel()
+    private var selectedCategory: Category? = null
     private val adapterImage = AddImageAdapter(
         onAddImage = { pickImage() },
         onDeleteImage = { removeImage(it) }
@@ -78,6 +83,10 @@ class CreateProductActivity : CustomeActivity() {
                 edtDeskripsi.setText("Deskripsi " + edtName.getString())
                 return@setOnLongClickListener true
             }
+
+            edtKategori.setOnClickListener {
+                intentActivityResult(SelectCategoryActivity::class.java, launcherCategory)
+            }
         }
     }
 
@@ -88,6 +97,11 @@ class CreateProductActivity : CustomeActivity() {
             if (edtBerat.isEmpty()) return false
             if (edtStok.isEmpty()) return false
             if (edtDeskripsi.isEmpty()) return false
+            if (selectedCategory == null) {
+                Toast.makeText(this@CreateProductActivity, "Pilih Kategori", Toast.LENGTH_SHORT)
+                    .show()
+                return false
+            }
         }
 
         return true
@@ -107,7 +121,8 @@ class CreateProductActivity : CustomeActivity() {
             description = binding.edtDeskripsi.text.toString(),
             weight = binding.edtBerat.text.toString().toInt(),
             stock = binding.edtStok.text.toString().toInt(),
-            imageReal = images
+            imageReal = images,
+            categoryId = selectedCategory?.id
         )
 
         viewModel.createProduct(requestData).observe(this) {
@@ -134,6 +149,15 @@ class CreateProductActivity : CustomeActivity() {
         onBackPressedDispatcher.onBackPressed()
         return super.onSupportNavigateUp()
     }
+
+    private val launcherCategory =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val str: String? = it.data?.getStringExtra("extra")
+                selectedCategory = str.toModel(Category::class.java)
+                binding.edtKategori.setText(selectedCategory?.name)
+            }
+        }
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

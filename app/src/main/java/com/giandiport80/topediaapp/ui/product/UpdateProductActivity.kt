@@ -59,7 +59,18 @@ class UpdateProductActivity : CustomeActivity() {
     }
 
     private fun setupUI() {
+        binding.apply {
+            edtHarga.addRupiahListener()
 
+            product?.let {
+                edtName.setText(it.name)
+                edtHarga.setText(it.price.toString())
+                edtStok.setText(it.stock.toString())
+                edtDeskripsi.setText(it.description)
+                edtBerat.setText(it.weight.toString())
+                edtKategori.setText(it.category?.name)
+            }
+        }
     }
 
     private fun getIntentExtra() {
