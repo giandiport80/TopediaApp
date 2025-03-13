@@ -17,6 +17,9 @@ data class Product(
     @SerializedName("toko_id")
     val tokoId: Int? = null,
 
+    @SerializedName("category_id")
+    val categoryId: Int? = null,
+
     val description: String? = null,
     val weight: Int? = null,
     val stock: Int? = null,
