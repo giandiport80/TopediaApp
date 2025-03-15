@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.giandiport80.topediaapp.core.data.source.model.Category
 import com.giandiport80.topediaapp.databinding.ItemHomeCategoryBinding
+import com.giandiport80.topediaapp.util.toUrlCategory
+import com.inyongtisto.myhelper.extension.setImagePicasso
 
 class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     private val data = ArrayList<Category>()
@@ -21,7 +23,8 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         fun bind(item: Category, position: Int) {
             itemBinding.apply {
                 textViewName.text = item.name
-                item.image?.let { imageView.setImageResource(it) }
+//                item.image?.let { imageView.setImageResource(it) }
+                item.imageReal?.let { imageView.setImagePicasso(item.imageReal.toUrlCategory()) }
             }
         }
     }

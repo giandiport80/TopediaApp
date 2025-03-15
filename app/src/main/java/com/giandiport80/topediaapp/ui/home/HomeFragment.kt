@@ -1,22 +1,24 @@
 package com.giandiport80.topediaapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.databinding.FragmentHomeBinding
 import com.giandiport80.topediaapp.ui.home.adapter.CategoryAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerbaruAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerlarisAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.SliderAdapter
+import com.inyongtisto.myhelper.extension.toJson
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModel()
     private val binding get() = _binding!!
     private val adapterCategory = CategoryAdapter()
     private val adapterSlider = SliderAdapter()
@@ -28,15 +30,39 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         setupAdapter()
         setData()
         mainButton()
+        getHome()
 
         return root
+    }
+
+    private fun getHome() {
+        homeViewModel.getHome().observe(requireActivity()) {
+            when (it.state) {
+                State.SUCCESS -> {
+                    Log.d("GETHOME", "getHome: " + it.toJson())
+                    val categories = it.data?.categories ?: emptyList()
+                    val products = it.data?.products ?: emptyList()
+//
+                    adapterCategory.addItems(categories)
+                    adapterProductTerlaris.addItems(products)
+                    adapterProductTerbaru.addItems(products)
+                }
+
+                State.ERROR -> {
+
+                }
+
+                State.LOADING -> {
+
+                }
+            }
+        }
     }
 
     private fun setupAdapter() {

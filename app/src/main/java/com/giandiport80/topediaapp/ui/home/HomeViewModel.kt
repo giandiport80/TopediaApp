@@ -3,12 +3,14 @@ package com.giandiport80.topediaapp.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.giandiport80.topediaapp.core.data.repository.AppRepository
 import com.giandiport80.topediaapp.core.data.source.local.DummyData
 import com.giandiport80.topediaapp.core.data.source.model.Category
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.model.Slider
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val repo: AppRepository) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "Halo selamat datang"
@@ -19,15 +21,11 @@ class HomeViewModel : ViewModel() {
         _text.postValue(value)
     }
 
-    val listCategory: LiveData<List<Category>> = MutableLiveData<List<Category>>().apply {
-        value = DummyData.listCategory
-    }
+    val listCategory: LiveData<List<Category>> = MutableLiveData<List<Category>>()
 
-    val listSlider: LiveData<List<Slider>> = MutableLiveData<List<Slider>>().apply {
-        value = DummyData.listSlider
-    }
+    val listSlider: LiveData<List<Slider>> = MutableLiveData<List<Slider>>()
 
-    val listProduct: LiveData<List<Product>> = MutableLiveData<List<Product>>().apply {
-        value = DummyData.listProduct
-    }
+    val listProduct: LiveData<List<Product>> = MutableLiveData<List<Product>>()
+
+    fun getHome() = repo.getHome().asLiveData()
 }

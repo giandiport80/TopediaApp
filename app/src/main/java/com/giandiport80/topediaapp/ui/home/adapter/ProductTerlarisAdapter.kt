@@ -3,14 +3,19 @@ package com.giandiport80.topediaapp.ui.home.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.databinding.ItemHomeProdukTerlarisBinding
 import com.giandiport80.topediaapp.util.Helper
+import com.giandiport80.topediaapp.util.toUrlProduct
 import com.inyongtisto.myhelper.extension.coret
+import com.inyongtisto.myhelper.extension.def
+import com.inyongtisto.myhelper.extension.setImagePicasso
 import com.inyongtisto.myhelper.extension.toGone
 import com.inyongtisto.myhelper.extension.toRupiah
 import com.inyongtisto.myhelper.extension.toVisible
+import com.inyongtisto.myhelper.extension.visible
 
 class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewHolder>() {
     private val data = ArrayList<Product>()
@@ -27,17 +32,18 @@ class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewH
         fun bind(item: Product, position: Int) {
             itemBinding.apply {
                 val harga = item.harga ?: 0
-                item.image?.let { imageView.setImageResource(it) }
+//                item.image?.let { imageView.setImageResource(it) }
+                imageView.setImagePicasso(item.firstImage().toUrlProduct())
                 tvName.text = item.name
                 tvHarga.text = item.harga?.let { Helper.toRupiah(it) }
-                tvPengiriman.text = item.pengiriman
-                tvRating.text = "" + item.rating + " | Terjual " + item.sold
+                tvPengiriman.text = item.pengiriman ?: "Jakarta Pusat"
+                tvRating.text = "" + (item.rating.def(5.0).toInt()) + " | Terjual " + item.sold
 
                 if (item.discount != null) {
                     val hargaSetelahDiskon =
                         (harga - ((item.discount.toDouble() / 100) * harga)).toRupiah()
                     lyGrosir.toGone()
-                    lyDiskon.toVisible()
+                    lyDiskon.visible(item.discount > 0)
                     tvDiskon.text = "${item.discount}%"
 
                     tvHarga.text = hargaSetelahDiskon

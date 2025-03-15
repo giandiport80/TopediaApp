@@ -2,6 +2,7 @@ package com.giandiport80.topediaapp.core.data.source.remote.network
 
 import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.core.data.source.model.Category
+import com.giandiport80.topediaapp.core.data.source.model.Home
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
@@ -23,6 +24,9 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
+    @GET("home")
+    suspend fun getHome(): Response<BaseResponse<Home>>
+
     @POST("login")
     suspend fun login(
         @Body login: LoginRequest
