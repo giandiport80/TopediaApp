@@ -10,6 +10,7 @@ import com.giandiport80.topediaapp.databinding.ActivityListCategoryAdminBinding
 import com.giandiport80.topediaapp.ui.category.adapter.CategoryAdminAdapter
 import com.giandiport80.topediaapp.util.defaultError
 import com.inyongtisto.myhelper.base.CustomeActivity
+import com.inyongtisto.myhelper.extension.dismissLoading
 import com.inyongtisto.myhelper.extension.intentActivity
 import com.inyongtisto.myhelper.extension.showConfirmDialog
 import com.inyongtisto.myhelper.extension.showErrorDialog
@@ -97,6 +98,7 @@ class ListCategoryAdminActivity() : CustomeActivity() {
         viewModel.getCategory().observe(this) {
             when (it.state) {
                 State.SUCCESS -> {
+                    binding.swipeRefresh.dismissLoading()
                     binding.tvError.visibility = View.GONE
 
                     val data = it.data ?: emptyList()
@@ -119,7 +121,9 @@ class ListCategoryAdminActivity() : CustomeActivity() {
     }
 
     private fun mainButton() {
-
+        binding.swipeRefresh.setOnRefreshListener {
+            getData()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
