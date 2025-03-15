@@ -55,6 +55,13 @@ class HomeFragment : Fragment() {
                     adapterBaruSlider.addItems(sliders)
                     adapterProductTerlaris.addItems(products)
                     adapterProductTerbaru.addItems(products)
+
+                    binding.apply {
+                        pdCategory.visibility = View.GONE
+                        pdSlider.visibility = View.GONE
+                        pdProductTerbaru.visibility = View.GONE
+                        pdProductTerlaris.visibility = View.GONE
+                    }
                 }
 
                 State.ERROR -> {
@@ -62,7 +69,6 @@ class HomeFragment : Fragment() {
                 }
 
                 State.LOADING -> {
-
                 }
             }
         }
