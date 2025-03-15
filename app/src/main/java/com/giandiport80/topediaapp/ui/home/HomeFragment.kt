@@ -12,6 +12,7 @@ import com.giandiport80.topediaapp.ui.home.adapter.CategoryAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerbaruAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerlarisAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.SliderBaruAdapter
+import com.inyongtisto.myhelper.extension.setDefaultColor
 import com.inyongtisto.myhelper.extension.toJson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -61,6 +62,7 @@ class HomeFragment : Fragment() {
                         pdSlider.visibility = View.GONE
                         pdProductTerbaru.visibility = View.GONE
                         pdProductTerlaris.visibility = View.GONE
+                        swipeRefresh.isRefreshing = false
                     }
                 }
 
@@ -104,6 +106,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun mainButton() {
+        binding.swipeRefresh.setDefaultColor()
+        binding.swipeRefresh.setOnRefreshListener {
+            getHome()
+        }
     }
 
     override fun onDestroyView() {

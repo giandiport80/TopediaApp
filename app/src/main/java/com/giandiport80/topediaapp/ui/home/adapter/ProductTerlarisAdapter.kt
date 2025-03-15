@@ -22,6 +22,7 @@ class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewH
 
     @SuppressLint("NotifyDataSetChanged")
     public fun addItems(items: List<Product>) {
+        data.clear()
         data.addAll(items)
         notifyDataSetChanged()
     }
