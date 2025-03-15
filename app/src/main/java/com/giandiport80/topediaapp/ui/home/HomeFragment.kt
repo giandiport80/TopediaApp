@@ -11,7 +11,6 @@ import com.giandiport80.topediaapp.databinding.FragmentHomeBinding
 import com.giandiport80.topediaapp.ui.home.adapter.CategoryAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerbaruAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerlarisAdapter
-import com.giandiport80.topediaapp.ui.home.adapter.SliderAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.SliderBaruAdapter
 import com.inyongtisto.myhelper.extension.toJson
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,7 +35,7 @@ class HomeFragment : Fragment() {
 
         setupSlider()
         setupAdapter()
-        setData()
+//        setData()
         mainButton()
         getHome()
 
@@ -50,8 +49,10 @@ class HomeFragment : Fragment() {
                     Log.d("GETHOME", "getHome: " + it.toJson())
                     val categories = it.data?.categories ?: emptyList()
                     val products = it.data?.products ?: emptyList()
+                    val sliders = it.data?.sliders ?: emptyList()
 //
                     adapterCategory.addItems(categories)
+                    adapterBaruSlider.addItems(sliders)
                     adapterProductTerlaris.addItems(products)
                     adapterProductTerbaru.addItems(products)
                 }

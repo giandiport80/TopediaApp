@@ -6,14 +6,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.giandiport80.topediaapp.core.data.repository.BaseViewModel
-import com.giandiport80.topediaapp.core.data.source.model.Category
 import com.giandiport80.topediaapp.core.data.source.model.Slider
 import com.giandiport80.topediaapp.core.data.source.remote.network.State
 import com.giandiport80.topediaapp.core.data.source.remote.request.SliderRequest
-import com.giandiport80.topediaapp.databinding.ActivityCreateCategoryBinding
+import com.giandiport80.topediaapp.databinding.ActivityCreateSliderBinding
 import com.giandiport80.topediaapp.ui.product.adapter.AddImageAdapter
 import com.giandiport80.topediaapp.util.defaultError
-import com.giandiport80.topediaapp.util.toUrlCategory
+import com.giandiport80.topediaapp.util.toUrlSlider
 import com.github.drjacky.imagepicker.ImagePicker
 import com.inyongtisto.myhelper.base.CustomeActivity
 import com.inyongtisto.myhelper.extension.extra
@@ -27,10 +26,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
 class CreateSliderActivity : CustomeActivity() {
-    private lateinit var binding: ActivityCreateCategoryBinding
+    private lateinit var binding: ActivityCreateSliderBinding
     private val viewModel: SliderViewModel by viewModel()
     private val viewModelBase: BaseViewModel by viewModel()
-    private val category by extra<Category>()
+    private val slider by extra<Slider>()
 
     private val adapterImage = AddImageAdapter(
         onAddImage = { pickImage() },
@@ -43,10 +42,10 @@ class CreateSliderActivity : CustomeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCreateCategoryBinding.inflate(layoutInflater)
+        binding = ActivityCreateSliderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val title = if (category == null) "Tambah Category" else "Edit Category"
+        val title = if (slider == null) "Tambah Slider" else "Edit Slider"
 
         setSupportActionBar(binding.lyToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -57,10 +56,10 @@ class CreateSliderActivity : CustomeActivity() {
     }
 
     private fun setupUI() {
-        category?.let {
+        slider?.let {
             binding.apply {
                 edtName.setText(it.name)
-                btnAddFoto.setImagePicasso(it.imageReal.toUrlCategory())
+                imageSlider.setImagePicasso(it.imageReal.toUrlSlider())
             }
         }
     }
@@ -69,7 +68,7 @@ class CreateSliderActivity : CustomeActivity() {
         binding.apply {
             lyToolbar.btnSimpan.visibility = View.VISIBLE
             lyToolbar.btnSimpan.setOnClickListener {
-                if (category == null) {
+                if (slider == null) {
                     if (validate()) {
                         upload()
                     }
@@ -82,7 +81,7 @@ class CreateSliderActivity : CustomeActivity() {
                 }
             }
 
-            btnAddFoto.setOnClickListener {
+            btnAdd.setOnClickListener {
                 pickImage()
             }
         }
@@ -110,7 +109,7 @@ class CreateSliderActivity : CustomeActivity() {
             when (it.state) {
                 State.SUCCESS -> {
                     progress.dismiss()
-                    Toast.makeText(this, "Category berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Slider berhasil ditambahkan", Toast.LENGTH_SHORT).show()
                     finish()
                 }
 
@@ -128,14 +127,16 @@ class CreateSliderActivity : CustomeActivity() {
 
     private fun update(imageName: String? = null) {
         val requestData = SliderRequest(
+            id = slider?.id,
             name = binding.edtName.text.toString(),
+            image = imageName
         )
 
         viewModel.update(requestData).observe(this) {
             when (it.state) {
                 State.SUCCESS -> {
                     progress.dismiss()
-                    Toast.makeText(this, "Category berhasil diubah", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Slider berhasil diubah", Toast.LENGTH_SHORT).show()
                     finish()
                 }
 
@@ -162,7 +163,7 @@ class CreateSliderActivity : CustomeActivity() {
                 val uri = it.data?.data!!
                 fileImage = File(uri.path!!)
 
-                Picasso.get().load(fileImage!!).into(binding.btnAddFoto)
+                Picasso.get().load(fileImage!!).into(binding.imageSlider)
             }
         }
 
@@ -180,13 +181,13 @@ class CreateSliderActivity : CustomeActivity() {
         val file = fileImage.toMultipartBody()
 
         if (file != null) {
-            viewModelBase.upload("category", file).observe(this) { it ->
+            viewModelBase.upload("slider", file).observe(this) {
                 when (it.state) {
                     State.SUCCESS -> {
                         progress.dismiss()
                         val imageName = it.data
                         if (imageName != null) {
-                            if (category == null) {
+                            if (slider == null) {
                                 create(imageName)
                             } else {
                                 update(imageName)

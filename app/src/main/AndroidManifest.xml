@@ -29,6 +29,9 @@
             android:name=".ui.slider.ListSliderAdminActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.slider.CreateSliderActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.category.SelectCategoryActivity"
             android:exported="false" />
         <activity
