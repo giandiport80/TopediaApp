@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.giandiport80.topediaapp.core.data.source.model.Slider
 import com.giandiport80.topediaapp.databinding.ItemHomeSliderBinding
+import com.giandiport80.topediaapp.util.toUrlSlider
+import com.inyongtisto.myhelper.extension.setImagePicasso
 
 class SliderAdapter : RecyclerView.Adapter<SliderAdapter.ViewHolder>() {
     private val data = ArrayList<Slider>()
@@ -20,7 +22,8 @@ class SliderAdapter : RecyclerView.Adapter<SliderAdapter.ViewHolder>() {
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: Slider, position: Int) {
             itemBinding.apply {
-                imageView.setImageResource(item.image)
+                imageView.setImagePicasso(item.imageReal.toUrlSlider())
+//                imageView.setImageResource(item.image)
             }
         }
     }

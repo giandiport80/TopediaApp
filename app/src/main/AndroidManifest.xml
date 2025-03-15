@@ -26,6 +26,9 @@
             android:name=".ui.category.ListCategoryAdminActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.slider.ListSliderAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.category.SelectCategoryActivity"
             android:exported="false" />
         <activity

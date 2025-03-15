@@ -7,6 +7,7 @@ import com.giandiport80.topediaapp.core.data.source.remote.network.ApiService
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
+import com.giandiport80.topediaapp.core.data.source.remote.request.SliderRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
 import com.giandiport80.topediaapp.util.getTokoId
 import okhttp3.MultipartBody
@@ -42,4 +43,10 @@ class RemoteDataSource(private val api: ApiService) {
 
     suspend fun uploadImage(path: String, fileImage: MultipartBody.Part? = null) =
         fileImage?.let { api.uploadImage(path, fileImage) }
+
+    /*********** Slider *************/
+    suspend fun getSlider() = api.getSlider()
+    suspend fun createSlider(data: SliderRequest) = api.createSlider(data)
+    suspend fun updateSlider(data: SliderRequest) = api.updateSlider(data.id, data)
+    suspend fun deleteSlider(id: Int?) = api.deleteSlider(id)
 }

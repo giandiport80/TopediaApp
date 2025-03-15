@@ -25,7 +25,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_slider_admin" />
+                tools:listitem="@layout/item_category_admin" />
 
             <TextView
                 android:id="@+id/tv_error"

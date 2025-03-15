@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.giandiport80.topediaapp.core.data.source.model.Slider
 import com.giandiport80.topediaapp.databinding.ItemHomeSliderBinding
+import com.giandiport80.topediaapp.util.toUrlSlider
+import com.inyongtisto.myhelper.extension.setImagePicasso
 
 class SliderBaruAdapter() : PagerAdapter() {
     private val data: ArrayList<Slider> = ArrayList()
@@ -29,7 +31,8 @@ class SliderBaruAdapter() : PagerAdapter() {
 
         val item = data[position]
         binding.apply {
-            imageView.setImageResource(item.image)
+//            imageView.setImageResource(item.image)
+            imageView.setImagePicasso(item.imageReal.toUrlSlider())
         }
 
         container.addView(binding.root)

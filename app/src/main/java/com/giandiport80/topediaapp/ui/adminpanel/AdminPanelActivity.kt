@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.giandiport80.topediaapp.databinding.ActivityAdminPanelBinding
 import com.giandiport80.topediaapp.ui.category.ListCategoryAdminActivity
+import com.giandiport80.topediaapp.ui.slider.ListSliderAdminActivity
 
 class AdminPanelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminPanelBinding
@@ -26,6 +27,11 @@ class AdminPanelActivity : AppCompatActivity() {
         binding.apply {
             btnCategory.setOnClickListener {
                 val intent = Intent(this@AdminPanelActivity, ListCategoryAdminActivity::class.java)
+                startActivity(intent)
+            }
+
+            btnSlider.setOnClickListener {
+                val intent = Intent(this@AdminPanelActivity, ListSliderAdminActivity::class.java)
                 startActivity(intent)
             }
         }

@@ -4,9 +4,11 @@ import com.giandiport80.topediaapp.core.data.source.model.AlamatToko
 import com.giandiport80.topediaapp.core.data.source.model.Category
 import com.giandiport80.topediaapp.core.data.source.model.Home
 import com.giandiport80.topediaapp.core.data.source.model.Product
+import com.giandiport80.topediaapp.core.data.source.model.Slider
 import com.giandiport80.topediaapp.core.data.source.remote.request.CreateTokoRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.LoginRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.RegisterRequest
+import com.giandiport80.topediaapp.core.data.source.remote.request.SliderRequest
 import com.giandiport80.topediaapp.core.data.source.remote.request.UpdateProfileRequest
 import com.giandiport80.topediaapp.core.data.source.remote.response.BaseListResponse
 import com.giandiport80.topediaapp.core.data.source.remote.response.BaseResponse
@@ -137,4 +139,23 @@ interface ApiService {
         @Path("id") id: String? = null,
         @Part data: MultipartBody.Part? = null
     ): Response<BaseResponse<String>>
+
+    @GET("slider")
+    suspend fun getSlider(): Response<BaseListResponse<Slider>>
+
+    @POST("slider")
+    suspend fun createSlider(
+        @Body data: SliderRequest
+    ): Response<BaseResponse<Slider>>
+
+    @PUT("slider/{id}")
+    suspend fun updateSlider(
+        @Path("id") id: Int? = null,
+        @Body data: SliderRequest
+    ): Response<BaseResponse<Slider>>
+
+    @DELETE("slider/{id}")
+    suspend fun deleteSlider(
+        @Path("id") id: Int? = null
+    ): Response<BaseResponse<Slider>>
 }
