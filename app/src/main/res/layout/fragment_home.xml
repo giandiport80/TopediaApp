@@ -30,27 +30,13 @@
                 app:spanCount="5"
                 tools:listitem="@layout/item_home_category" />
 
-            <HorizontalScrollView
-                android:scrollbars="none"
-                android:layout_marginTop="@dimen/_10sdp"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/slider"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="@dimen/_110sdp" />
 
-                <RelativeLayout
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvSlider"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="3"
-                        tools:listitem="@layout/item_home_slider" />
-                </RelativeLayout>
-            </HorizontalScrollView>
 
             <RelativeLayout
                 android:layout_marginHorizontal="@dimen/_10sdp"

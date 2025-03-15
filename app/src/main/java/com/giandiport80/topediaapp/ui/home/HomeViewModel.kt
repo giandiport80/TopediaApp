@@ -23,7 +23,9 @@ class HomeViewModel(private val repo: AppRepository) : ViewModel() {
 
     val listCategory: LiveData<List<Category>> = MutableLiveData<List<Category>>()
 
-    val listSlider: LiveData<List<Slider>> = MutableLiveData<List<Slider>>()
+    val listSlider: LiveData<List<Slider>> = MutableLiveData<List<Slider>>().apply {
+        value = DummyData.listSlider
+    }
 
     val listProduct: LiveData<List<Product>> = MutableLiveData<List<Product>>()
 

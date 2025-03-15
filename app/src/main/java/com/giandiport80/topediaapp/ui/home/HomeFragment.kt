@@ -12,6 +12,7 @@ import com.giandiport80.topediaapp.ui.home.adapter.CategoryAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerbaruAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.ProductTerlarisAdapter
 import com.giandiport80.topediaapp.ui.home.adapter.SliderAdapter
+import com.giandiport80.topediaapp.ui.home.adapter.SliderBaruAdapter
 import com.inyongtisto.myhelper.extension.toJson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,7 +22,7 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModel()
     private val binding get() = _binding!!
     private val adapterCategory = CategoryAdapter()
-    private val adapterSlider = SliderAdapter()
+    private val adapterBaruSlider = SliderBaruAdapter()
     private val adapterProductTerlaris = ProductTerlarisAdapter()
     private val adapterProductTerbaru = ProductTerbaruAdapter()
 
@@ -33,6 +34,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setupSlider()
         setupAdapter()
         setData()
         mainButton()
@@ -67,9 +69,15 @@ class HomeFragment : Fragment() {
 
     private fun setupAdapter() {
         binding.rvCategory.adapter = adapterCategory
-        binding.rvSlider.adapter = adapterSlider
         binding.rvProductTerlaris.adapter = adapterProductTerlaris
         binding.rvProductTerbaru.adapter = adapterProductTerbaru
+    }
+
+    private fun setupSlider() {
+        binding.apply {
+            slider.adapter = adapterBaruSlider
+            slider.setPadding(40, 0, 40, 0)
+        }
     }
 
     private fun setData() {
@@ -78,13 +86,14 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.listSlider.observe(viewLifecycleOwner) {
-            adapterSlider.addItems(it)
+            adapterBaruSlider.addItems(it)
         }
 
         homeViewModel.listProduct.observe(viewLifecycleOwner) {
             adapterProductTerlaris.addItems(it)
             adapterProductTerbaru.addItems(it)
         }
+
     }
 
     private fun mainButton() {
