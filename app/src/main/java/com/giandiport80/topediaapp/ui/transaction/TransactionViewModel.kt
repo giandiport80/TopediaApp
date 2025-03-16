@@ -1,4 +1,4 @@
-package com.giandiport80.topediaapp.ui.dashboard
+package com.giandiport80.topediaapp.ui.transaction
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

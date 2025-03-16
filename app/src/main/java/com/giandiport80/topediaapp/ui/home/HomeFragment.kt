@@ -67,7 +67,13 @@ class HomeFragment : Fragment() {
                 }
 
                 State.ERROR -> {
-
+                    binding.apply {
+                        pdCategory.visibility = View.GONE
+                        pdSlider.visibility = View.GONE
+                        pdProductTerbaru.visibility = View.GONE
+                        pdProductTerlaris.visibility = View.GONE
+                        swipeRefresh.isRefreshing = false
+                    }
                 }
 
                 State.LOADING -> {

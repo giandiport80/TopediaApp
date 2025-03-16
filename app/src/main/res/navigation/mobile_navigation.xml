@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.giandiport80.topediaapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.giandiport80.topediaapp.ui.transaction.TransactionFragment"
+        android:label="@string/title_transaction"
+        tools:layout="@layout/fragment_transaction" />
 
     <fragment
         android:id="@+id/navigation_keranjang"
