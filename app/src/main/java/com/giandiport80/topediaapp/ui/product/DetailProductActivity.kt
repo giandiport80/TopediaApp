@@ -10,7 +10,7 @@ import com.giandiport80.topediaapp.databinding.ActivityDetailProductBinding
 
 class DetailProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductBinding
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,6 +22,9 @@ class DetailProductActivity : AppCompatActivity() {
     }
 
     private fun mainButton() {
+        binding.btnBack.setOnClickListener {
 
+        }
     }
+
 }

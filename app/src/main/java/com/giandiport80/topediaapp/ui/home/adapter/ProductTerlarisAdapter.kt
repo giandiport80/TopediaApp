@@ -7,10 +7,12 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.giandiport80.topediaapp.core.data.source.model.Product
 import com.giandiport80.topediaapp.databinding.ItemHomeProdukTerlarisBinding
+import com.giandiport80.topediaapp.ui.product.DetailProductActivity
 import com.giandiport80.topediaapp.util.Helper
 import com.giandiport80.topediaapp.util.toUrlProduct
 import com.inyongtisto.myhelper.extension.coret
 import com.inyongtisto.myhelper.extension.def
+import com.inyongtisto.myhelper.extension.intentActivity
 import com.inyongtisto.myhelper.extension.setImagePicasso
 import com.inyongtisto.myhelper.extension.toGone
 import com.inyongtisto.myhelper.extension.toRupiah
@@ -50,6 +52,10 @@ class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewH
                     tvHarga.text = hargaSetelahDiskon
                     tvHargaAsli.text = item.harga?.let { Helper.toRupiah(it) }
                     tvHargaAsli.coret()
+                }
+
+                lyMain.setOnClickListener {
+                    root.context.intentActivity(DetailProductActivity::class.java)
                 }
             }
         }

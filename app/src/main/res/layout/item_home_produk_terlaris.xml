@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/lyMain"
         app:cardCornerRadius="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_width="wrap_content"
