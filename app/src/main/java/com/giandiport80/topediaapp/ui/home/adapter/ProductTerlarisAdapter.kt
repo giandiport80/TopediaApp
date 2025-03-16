@@ -19,7 +19,9 @@ import com.inyongtisto.myhelper.extension.toRupiah
 import com.inyongtisto.myhelper.extension.toVisible
 import com.inyongtisto.myhelper.extension.visible
 
-class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewHolder>() {
+class ProductTerlarisAdapter(
+    var onClick: (product: Product) -> Unit,
+) : RecyclerView.Adapter<ProductTerlarisAdapter.ViewHolder>() {
     private val data = ArrayList<Product>()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -55,7 +57,8 @@ class ProductTerlarisAdapter : RecyclerView.Adapter<ProductTerlarisAdapter.ViewH
                 }
 
                 lyMain.setOnClickListener {
-                    root.context.intentActivity(DetailProductActivity::class.java)
+                    onClick(item)
+//                    root.context.intentActivity(DetailProductActivity::class.java, item)
                 }
             }
         }

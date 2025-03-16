@@ -108,6 +108,11 @@ interface ApiService {
         @Path("id") tokoId: Int? = null,
     ): Response<BaseResponse<Product>>
 
+    @GET("products/{id}")
+    suspend fun getOneProduct(
+        @Path("id") id: Int? = null,
+    ): Response<BaseResponse<Product>>
+
     @Multipart
     @POST("upload/product")
     suspend fun uploadProduct(

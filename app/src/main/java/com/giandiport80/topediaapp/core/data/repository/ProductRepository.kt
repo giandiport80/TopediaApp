@@ -133,6 +133,36 @@ class ProductRepository(
         }
     }
 
+    fun getOneProduct(id: Int?) = flow {
+        emit(Resource.loading(null))
+        try {
+            remoteDataSource.getOneProduct(id).let {
+                if (it.isSuccessful) {
+                    val body = it.body()
+                    val data = body?.data
+
+                    emit(Resource.success(data, body?.message))
+                } else {
+                    val errorResponse = it.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.message ?: "Terjadi kesalahan"
+                        } catch (e: Exception) {
+                            "Terjadi kesalahan saat mengolah error"
+                        }
+                    } else {
+                        "Terjadi kesalahan"
+                    }
+
+                    emit(Resource.error(errorMessage, null))
+                }
+            }
+        } catch (error: Exception) {
+            emit(Resource.error(error.message ?: "Terjadi kesalahan", null))
+        }
+    }
+
     fun uploadProduct(fileImage: MultipartBody.Part? = null) = flow {
         emit(Resource.loading(null))
         try {

@@ -15,7 +15,10 @@ class ProductViewModel(private val repo: ProductRepository) : ViewModel() {
 
     fun deleteProduct(id: Int?) = repo.deleteProduct(id).asLiveData()
 
+    fun getOneProduct(id: Int?) = repo.getOneProduct(id).asLiveData()
+
     fun uploadProduct(fileImage: MultipartBody.Part) =
         repo.uploadProduct(fileImage).asLiveData()
+
 
 }

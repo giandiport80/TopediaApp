@@ -1,7 +1,10 @@
 package com.giandiport80.topediaapp.core.data.source.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Toko(
     val id: Int? = null,
 
@@ -16,4 +19,4 @@ data class Toko(
 
     @SerializedName("updated_at")
     val updatedAt: String? = null
-)
+) : Parcelable
